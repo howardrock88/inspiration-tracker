@@ -90,7 +90,7 @@
       <div class="space-y-4">
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">灵感内容 <span class="text-red-500">*</span></label>
-          <textarea id="new-content" rows="3" placeholder="描述你的创作灵感... 例如：分享我用 AI 工具提升工作效率的经历" 
+          <textarea id="new-content" rows="3" placeholder="描述你的创作灵感..." 
             class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500"></textarea>
         </div>
         
@@ -140,17 +140,7 @@
       
       <div class="flex gap-3 mt-6">
         <button onclick="closeModal()" class="flex-1 px-4 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer">取消</button>
-        <button onclick="generateSuggestionsPreview(); event.target.style.display='none';" class="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-violet-500 text-white rounded-xl font-medium cursor-pointer">✨ 预览建议</button>
-        <button onclick="addInspiration()" class="flex-1 px-4 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl font-medium cursor-pointer" id="save-btn">保存</button>
-      </div>
-      
-      <!-- 创作建议预览 -->
-      <div id="suggestion-preview" class="mt-4 p-4 bg-gradient-to-r from-amber-50 to-violet-50 rounded-xl hidden">
-        <div class="flex items-center gap-2 mb-3">
-          <span class="text-lg">💡</span>
-          <span class="font-bold text-gray-700">AI 创作建议预览</span>
-        </div>
-        <div id="suggestion-content" class="space-y-3"></div>
+        <button onclick="addInspiration()" class="flex-1 px-4 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl font-medium cursor-pointer">保存</button>
       </div>
     </div>
   </div>
@@ -160,49 +150,30 @@
     const GITHUB_REPO = 'howardrock88/inspiration-tracker';
     const DATA_FILE = 'inspirations.json';
     
+    // Token 管理
+    function getGitHubToken() {
+      return localStorage.getItem('github_token') || '';
+    }
+    
+    function setGitHubToken(token) {
+      localStorage.setItem('github_token', token);
+    }
+    
+    function checkGitHubToken() {
+      const token = getGitHubToken();
+      if (!token) {
+        const input = prompt('首次使用，请输入 GitHub Token：\n\n生成方式：https://github.com/settings/tokens');
+        if (input) {
+          setGitHubToken(input);
+          return input;
+        }
+        return null;
+      }
+      return token;
+    }
+
     // 数据存储
     let inspirations = JSON.parse(localStorage.getItem('inspirations') || '[]');
-    
-    // 关键词分析
-    const keywordPatterns = {
-      AI工具: {
-        titles: ['AI工具箱｜', '救命！', '后悔没早点知道', '效率提升', '打工人必备'],
-        angles: ['工具横向对比', '新手入门指南', '避坑建议', '替代方案', '免费vs付费'],
-        structures: ['问题引入 → 解决方案 → 效果展示 → 使用建议', '痛点分析 → 推荐工具 → 实操演示 → 总结']
-      },
-      OpenClaw: {
-        titles: ['OpenClaw 教程', '用 OpenClaw 打造', 'OpenClaw 实战'],
-        angles: ['功能介绍', '场景应用', '进阶技巧'],
-        structures: ['背景 → 安装 → 配置 → 实战 → 总结']
-      },
-      效率: {
-        titles: ['时间管理', '效率翻倍', '告别拖延', '自律清单', '专注力'],
-        angles: ['早起routine', '番茄工作法', '任务管理', '精力管理', '习惯养成'],
-        structures: ['现状分析 → 问题诊断 → 方法推荐 → 行动计划', '个人经历 → 心得总结 → 技巧分享']
-      },
-      学习: {
-        titles: ['学习干货', '认知升级', '深度思考', '知识体系', '成长记录'],
-        angles: ['学习方法论', '阅读分享', '课程评测', '技能提升', '思维模型'],
-        structures: ['问题提出 → 解决思路 → 案例分析 → 行动建议', '主题拆解 → 知识点梳理 → 推荐资源']
-      },
-      测评: {
-        titles: ['真实测评', '使用体验', '深度对比', '优缺点', '购买建议'],
-        angles: ['外观设计', '功能体验', '性价比分析', '适用人群', '竞品对比'],
-        structures: ['购买背景 → 开箱体验 → 核心功能 → 总结建议', '需求分析 → 候选对比 → 最终选择 → 使用感受']
-      },
-      教程: {
-        titles: ['从0到1', '手把手教你', '入门指南', '完整教程', '新手必看'],
-        angles: ['环境准备', '基础功能', '进阶操作', '常见问题', '实战项目'],
-        structures: ['前置知识 → 环境搭建 → 步骤详解 → 完整代码 → 扩展思考']
-      }
-    };
-
-    // 默认模板
-    const defaultTemplates = {
-      titles: ['「XX主题」一篇讲透', '关于XX的一些思考', 'XX全攻略｜建议收藏'],
-      angles: ['从0到1入门', '常见误区', '进阶技巧', '实用工具推荐'],
-      structures: ['问题 → 分析 → 解决方案 → 总结', '背景 → 核心内容 → 案例 → 建议']
-    };
 
     // 筛选配置
     const filters = {
@@ -214,96 +185,58 @@
 
     let currentFilters = { platform: '全部', type: '全部', subject: '全部', status: '全部' };
 
-    // 分析内容关键词
-    function analyzeContent(content) {
-      const lowerContent = content.toLowerCase();
-      const matched = [];
-      
-      for (const [keyword, templates] of Object.entries(keywordPatterns)) {
-        if (lowerContent.includes(keyword.toLowerCase())) {
-          matched.push({ keyword, templates });
-        }
-      }
-      
-      return matched.length > 0 ? matched : null;
-    }
-
-    // 生成定制化建议
-    function generateSuggestions(content, platform, type, subject) {
-      const matched = analyzeContent(content);
-      
-      // 获取模板
-      const template = matched 
-        ? matched[0].templates 
-        : defaultTemplates;
-      
-      // 根据平台调整
-      const platformAdjustments = {
-        '小红书': { length: '300-500字/篇', style: '轻松活泼、emoji丰富、口语化', structure: '开头钩子 → 干货输出 → 结尾互动' },
-        '微信': { length: '2000-3500字', style: '专业深度、逻辑清晰、有理有据', structure: '背景铺垫 → 核心论述 → 案例支撑 → 总结升华' },
-        '微博': { length: '100-200字', style: '观点鲜明、话题tag、互动性强', structure: '观点 → 补充说明 → 话题引导' },
-        'B站': { length: '视频脚本', style: '口语化、节奏感、适当玩梗', structure: '开场吸引 → 内容展开 → 总结互动' },
-        '其他': { length: '自由发挥', style: '符合平台调性', structure: '自定' }
-      };
-      
-      const adjustment = platformAdjustments[platform] || platformAdjustments['其他'];
-      
-      // 生成建议
-      return {
-        titles: template.titles || defaultTemplates.titles,
-        angles: template.angles || defaultTemplates.angles,
-        structure: template.structures || defaultTemplates.structures,
-        platform: adjustment,
-        referenceWorks: []
-      };
-    }
-
     // 初始化
     function init() {
       renderFilters();
       renderList();
       updateStats();
-      // 尝试从 GitHub 同步
-      syncFromGitHub();
     }
 
-    // 从 GitHub 同步
-    // 合并同步：保留本地新增的数据
+    // 渲染筛选器
+    function renderFilters() {
+      let html = '';
+      for (const [key, config] of Object.entries(filters)) {
+        html += `<div class="flex items-center gap-2">
+          <span class="text-sm text-gray-500">${config.label}：</span>
+          <select onchange="updateFilter('${key}', this.value)" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 bg-white">
+            ${config.options.map(o => `<option value="${o}" ${currentFilters[key] === o ? 'selected' : ''}>${o}</option>`).join('')}
+          </select>
+        </div>`;
+      }
+      document.getElementById('filters').innerHTML = html;
+    }
+
+    // 更新筛选
+    function updateFilter(key, value) {
+      currentFilters[key] = value;
+      renderList();
+    }
+
+    // 从 GitHub 同步（保留本地新增的）
     async function syncFromGitHub() {
+      const token = checkGitHubToken();
+      if (!token) return;
+      
       try {
         const response = await fetch(`https://raw.githubusercontent.com/${GITHUB_REPO}/main/${DATA_FILE}?t=${Date.now()}`);
         if (response.ok) {
           const githubData = await response.json();
           if (Array.isArray(githubData)) {
-            // 获取本地数据
             const localData = inspirations;
-            
-            // 合并去重：以 GitHub 数据为基础，添加本地独有的数据
             const githubIds = new Set(githubData.map(i => i.id));
-            
-            // 找出本地新增的（GitHub 没有的）
             const newFromLocal = localData.filter(i => !githubIds.has(i.id));
-            
-            // 合并
             inspirations = [...githubData, ...newFromLocal];
-            
-            // 保存到本地
             localStorage.setItem('inspirations', JSON.stringify(inspirations));
             renderList();
             updateStats();
-            
-            if (newFromLocal.length > 0) {
-              console.log(`✅ 已同步，保留了 ${newFromLocal.length} 条本地新增数据`);
-            } else {
-              console.log('✅ 已从 GitHub 同步');
-            }
+            console.log('✅ 已同步');
           }
         }
       } catch (e) {
-        console.log('GitHub 同步失败，使用本地数据');
+        console.log('GitHub 同步失败');
       }
     }
-    
+
     // 上传到 GitHub
     async function uploadToGitHub() {
       const token = getGitHubToken();
@@ -313,7 +246,7 @@
         const content = JSON.stringify(inspirations, null, 2);
         const encodedContent = btoa(unescape(encodeURIComponent(content)));
         
-        // 获取当前文件的 SHA
+        // 获取 SHA
         let sha = null;
         try {
           const existingFile = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${DATA_FILE}`, {
@@ -344,26 +277,6 @@
         console.log('GitHub 上传失败:', e);
         return false;
       }
-    }
-
-    // 渲染筛选器
-    function renderFilters() {
-      let html = '';
-      for (const [key, config] of Object.entries(filters)) {
-        html += `<div class="flex items-center gap-2">
-          <span class="text-sm text-gray-500">${config.label}：</span>
-          <select onchange="updateFilter('${key}', this.value)" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 bg-white">
-            ${config.options.map(o => `<option value="${o}" ${currentFilters[key] === o ? 'selected' : ''}>${o}</option>`).join('')}
-          </select>
-        </div>`;
-      }
-      document.getElementById('filters').innerHTML = html;
-    }
-
-    // 更新筛选
-    function updateFilter(key, value) {
-      currentFilters[key] = value;
-      renderList();
     }
 
     // 渲染列表
@@ -400,8 +313,7 @@
             </div>
             <p class="text-gray-800 text-lg mb-3">${item.content}</p>
             
-            <!-- AI 创作建议 -->
-            ${renderSuggestions(item)}
+            ${item.suggestions ? renderSuggestions(item) : '<div class="text-sm text-gray-400 italic">⏳ 等待 AI 生成创作建议...</div>'}
             
             <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-gray-100">
               <span class="text-sm text-gray-400">${item.createdAt}</span>
@@ -422,9 +334,9 @@
 
     // 渲染建议
     function renderSuggestions(item) {
-      if (!item.suggestions) return '';
-      
       const s = item.suggestions;
+      if (!s || !s.titles) return '';
+      
       let html = `
         <div class="bg-gradient-to-r from-amber-50 to-violet-50 rounded-xl p-4 mb-3">
           <div class="flex items-center gap-2 mb-3">
@@ -434,41 +346,29 @@
           </div>
           
           <div class="grid gap-3">
-            <!-- 标题建议 -->
             <div class="suggestion-section suggestion-title pl-3">
               <div class="text-xs font-medium text-amber-600 mb-1">📝 标题建议</div>
-              <div class="text-sm text-gray-700 space-y-1">
-                ${(s.titles || []).map(t => `<div>• ${t}</div>`).join('')}
-              </div>
+              <div class="text-sm text-gray-700 space-y-1">${(s.titles || []).map(t => `<div>• ${t}</div>`).join('')}</div>
             </div>
             
-            <!-- 选题角度 -->
             <div class="suggestion-section suggestion-content pl-3">
               <div class="text-xs font-medium text-violet-600 mb-1">🎯 选题角度</div>
-              <div class="text-sm text-gray-700 space-y-1">
-                ${(s.angles || []).map(a => `<div>• ${a}</div>`).join('')}
-              </div>
+              <div class="text-sm text-gray-700 space-y-1">${(s.angles || []).map(a => `<div>• ${a}</div>`).join('')}</div>
             </div>
             
-            <!-- 内容结构 -->
             <div class="suggestion-section suggestion-structure pl-3">
               <div class="text-xs font-medium text-emerald-600 mb-1">📐 内容结构</div>
-              <div class="text-sm text-gray-700 space-y-1">
-                ${(s.structure || []).map(st => `<div>• ${st}</div>`).join('')}
-              </div>
+              <div class="text-sm text-gray-700 space-y-1">${(s.structure || []).map(st => `<div>• ${st}</div>`).join('')}</div>
             </div>
             
-            <!-- 平台适配 -->
             <div class="suggestion-section suggestion-style pl-3">
               <div class="text-xs font-medium text-pink-600 mb-1">✨ 平台适配</div>
               <div class="text-sm text-gray-700 space-y-1">
                 <div><strong>篇幅：</strong>${s.platform?.length || '自由'}</div>
                 <div><strong>风格：</strong>${s.platform?.style || '符合平台调性'}</div>
               </div>
-            </div>
-      `;
+            </div>`;
       
-      // 参考作品
       if (s.referenceWorks && s.referenceWorks.length > 0) {
         html += `
             <div class="mt-2">
@@ -480,64 +380,11 @@
                   <div class="text-xs text-gray-400 mt-1">${ref.stats || ''}</div>
                 </div>
               `).join('')}
-            </div>
-        `;
+            </div>`;
       }
       
       html += `</div></div>`;
       return html;
-    }
-
-    // 生成建议预览
-    function generateSuggestionsPreview() {
-      const content = document.getElementById('new-content').value.trim();
-      if (!content) {
-        alert('请先描述你的灵感内容');
-        return;
-      }
-      
-      const platform = document.getElementById('new-platform').value;
-      const type = document.getElementById('new-type').value;
-      const subject = document.getElementById('new-subject').value;
-      
-      const suggestions = generateSuggestions(content, platform, type, subject);
-      
-      // 显示预览
-      const preview = document.getElementById('suggestion-preview');
-      const previewContent = document.getElementById('suggestion-content');
-      preview.classList.remove('hidden');
-      
-      previewContent.innerHTML = `
-        <div class="grid gap-3">
-          <div class="suggestion-section suggestion-title pl-3">
-            <div class="text-xs font-medium text-amber-600 mb-1">📝 标题建议</div>
-            <div class="text-sm text-gray-700 space-y-1">
-              ${suggestions.titles.map(t => `<div>• ${t}</div>`).join('')}
-            </div>
-          </div>
-          <div class="suggestion-section suggestion-content pl-3">
-            <div class="text-xs font-medium text-violet-600 mb-1">🎯 选题角度</div>
-            <div class="text-sm text-gray-700 space-y-1">
-              ${suggestions.angles.map(a => `<div>• ${a}</div>`).join('')}
-            </div>
-          </div>
-          <div class="suggestion-section suggestion-structure pl-3">
-            <div class="text-xs font-medium text-emerald-600 mb-1">📐 内容结构</div>
-            <div class="text-sm text-gray-700 space-y-1">
-              ${suggestions.structure.map(st => `<div>• ${st}</div>`).join('')}
-            </div>
-          </div>
-          <div class="suggestion-section suggestion-style pl-3">
-            <div class="text-xs font-medium text-pink-600 mb-1">✨ 平台适配</div>
-            <div class="text-sm text-gray-700 space-y-1">
-              <div><strong>篇幅：</strong>${suggestions.platform.length}</div>
-              <div><strong>风格：</strong>${suggestions.platform.style}</div>
-            </div>
-          </div>
-        </div>
-      `;
-      
-      document.getElementById('save-btn').disabled = false;
     }
 
     // 更新统计
@@ -579,32 +426,29 @@
       updateStats();
       
       // 自动同步到 GitHub
-      const token = getGitHubToken();
-      if (token) {
-        const success = await uploadToGitHub();
-        if (success) {
-          console.log('✅ 已同步到 GitHub，Agent 将自动生成建议');
-        }
-      }
+      await uploadToGitHub();
     }
 
     // 更新状态
-    function updateStatus(id, status) {
+    async function updateStatus(id, status) {
       const item = inspirations.find(i => i.id === id);
       if (item) {
         item.status = status;
         localStorage.setItem('inspirations', JSON.stringify(inspirations));
         updateStats();
+        await uploadToGitHub();
       }
     }
 
-    // 删除
-    function deleteInspiration(id) {
+    // 删除灵感
+    async function deleteInspiration(id) {
       if (confirm('确定删除这个灵感吗？')) {
         inspirations = inspirations.filter(i => i.id !== id);
         localStorage.setItem('inspirations', JSON.stringify(inspirations));
         renderList();
         updateStats();
+        // 同步删除到 GitHub
+        await uploadToGitHub();
       }
     }
 
@@ -612,8 +456,6 @@
     function openModal() {
       document.getElementById('modal').classList.remove('hidden');
       document.getElementById('new-content').value = '';
-      document.getElementById('suggestion-preview').classList.add('hidden');
-      document.getElementById('save-btn').disabled = true;
     }
     
     function closeModal() {
