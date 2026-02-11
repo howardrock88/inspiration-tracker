@@ -268,17 +268,35 @@
     }
 
     // 从 GitHub 同步
+    // 合并同步：保留本地新增的数据
     async function syncFromGitHub() {
       try {
         const response = await fetch(`https://raw.githubusercontent.com/${GITHUB_REPO}/main/${DATA_FILE}?t=${Date.now()}`);
         if (response.ok) {
-          const data = await response.json();
-          if (Array.isArray(data) && data.length >= 0) {
-            inspirations = data;
+          const githubData = await response.json();
+          if (Array.isArray(githubData)) {
+            // 获取本地数据
+            const localData = inspirations;
+            
+            // 合并去重：以 GitHub 数据为基础，添加本地独有的数据
+            const githubIds = new Set(githubData.map(i => i.id));
+            
+            // 找出本地新增的（GitHub 没有的）
+            const newFromLocal = localData.filter(i => !githubIds.has(i.id));
+            
+            // 合并
+            inspirations = [...githubData, ...newFromLocal];
+            
+            // 保存到本地
             localStorage.setItem('inspirations', JSON.stringify(inspirations));
             renderList();
             updateStats();
-            console.log('✅ 已从 GitHub 同步');
+            
+            if (newFromLocal.length > 0) {
+              console.log(`✅ 已同步，保留了 ${newFromLocal.length} 条本地新增数据`);
+            } else {
+              console.log('✅ 已从 GitHub 同步');
+            }
           }
         }
       } catch (e) {
