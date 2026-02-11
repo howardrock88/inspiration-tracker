@@ -426,7 +426,17 @@
       updateStats();
       
       // 自动同步到 GitHub
-      await uploadToGitHub();
+      const token = checkGitHubToken();
+      if (token) {
+        const success = await uploadToGitHub();
+        if (success) {
+          alert('✅ 已保存并同步到 GitHub！');
+        } else {
+          alert('⚠️ 已保存到本地，但同步失败');
+        }
+      } else {
+        alert('⚠️ 已保存到本地，请先配置 GitHub Token');
+      }
     }
 
     // 更新状态
