@@ -273,7 +273,7 @@
         const response = await fetch(`https://raw.githubusercontent.com/${GITHUB_REPO}/main/${DATA_FILE}?t=${Date.now()}`);
         if (response.ok) {
           const data = await response.json();
-          if (Array.isArray(data) && data.length > inspirations.length) {
+          if (Array.isArray(data) && data.length >= 0) {
             inspirations = data;
             localStorage.setItem('inspirations', JSON.stringify(inspirations));
             renderList();
