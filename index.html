@@ -425,17 +425,56 @@
       renderList();
       updateStats();
       
-      // 自动同步到 GitHub
-      const token = checkGitHubToken();
+      // 强制获取 Token
+      let token = getGitHubToken();
+      if (!token) {
+        token = prompt('请输入 GitHub Token（用于同步到 GitHub）：\n\n生成方式：https://github.com/settings/tokens');
+        if (token) {
+          setGitHubToken(token);
+        }
+      }
+      
       if (token) {
-        const success = await uploadToGitHub();
-        if (success) {
-          alert('✅ 已保存并同步到 GitHub！');
-        } else {
-          alert('⚠️ 已保存到本地，但同步失败');
+        try {
+          // 获取当前 SHA
+          let sha = null;
+          const shaResp = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${DATA_FILE}`, {
+            headers: { 'Authorization': `token ${token}` }
+          });
+          if (shaResp.ok) {
+            const shaData = await shaResp.json();
+            sha = shaData.sha;
+          }
+          
+          // 上传
+          const content = JSON.stringify(inspirations, null, 2);
+          const encodedContent = btoa(unescape(encodeURIComponent(content)));
+          
+          const uploadResp = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${DATA_FILE}`, {
+            method: 'PUT',
+            headers: {
+              'Authorization': `token ${token}`,
+              'Accept': 'application/vnd.github.v3+json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              message: `Add: ${item.content.slice(0, 20)}...`,
+              content: encodedContent,
+              sha: sha
+            })
+          });
+          
+          if (uploadResp.ok) {
+            alert('✅ 已保存并同步到 GitHub！');
+          } else {
+            const err = await uploadResp.json();
+            alert('⚠️ 同步失败: ' + (err.message || '未知错误'));
+          }
+        } catch (e) {
+          alert('⚠️ 同步失败: ' + e.message);
         }
       } else {
-        alert('⚠️ 已保存到本地，请先配置 GitHub Token');
+        alert('⚠️ 已保存到本地（未同步）');
       }
     }
 
