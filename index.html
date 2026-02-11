@@ -140,8 +140,8 @@
       
       <div class="flex gap-3 mt-6">
         <button onclick="closeModal()" class="flex-1 px-4 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer">取消</button>
-        <button onclick="generateSuggestionsPreview()" class="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-violet-500 text-white rounded-xl font-medium cursor-pointer">✨ 生成建议</button>
-        <button onclick="addInspiration()" class="flex-1 px-4 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl font-medium cursor-pointer" id="save-btn" disabled>保存</button>
+        <button onclick="generateSuggestionsPreview(); event.target.style.display='none';" class="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-violet-500 text-white rounded-xl font-medium cursor-pointer">✨ 预览建议</button>
+        <button onclick="addInspiration()" class="flex-1 px-4 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl font-medium cursor-pointer" id="save-btn">保存</button>
       </div>
       
       <!-- 创作建议预览 -->
