@@ -74,6 +74,7 @@
         <span class="text-sm text-gray-500">💾 数据已保存在浏览器本地 + GitHub</span>
         <div class="flex gap-2">
           <button onclick="syncFromGitHub()" class="px-4 py-2 text-sm bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-50 cursor-pointer">🔄 同步 GitHub</button>
+          <button onclick="shareToAgent()" class="px-4 py-2 text-sm bg-green-100 text-green-700 rounded-lg hover:bg-green-50 cursor-pointer">📤 同步新灵感</button>
           <button onclick="exportData()" class="px-4 py-2 text-sm bg-white border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">导出数据</button>
           <button onclick="importData()" class="px-4 py-2 text-sm bg-white border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">导入数据</button>
           <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)">
@@ -302,6 +303,42 @@
       } catch (e) {
         console.log('GitHub 同步失败，使用本地数据');
       }
+    }
+
+    // 分享给 Agent（生成待同步的数据）
+    function shareToAgent() {
+      const localData = inspirations;
+      
+      // 找出没有建议的灵感（本地新增的）
+      const needSync = localData.filter(i => !i.suggestions || !i.suggestions.titles);
+      
+      if (needSync.length === 0) {
+        alert('所有灵感都已生成建议！');
+        return;
+      }
+      
+      // 生成简化的数据格式
+      const syncData = needSync.map(i => ({
+        id: i.id,
+        content: i.content,
+        platform: i.platform,
+        type: i.type,
+        subject: i.subject,
+        status: i.status,
+        createdAt: i.createdAt
+      }));
+      
+      const text = `【灵感数据待同步】\n\n请为以下灵感生成创作建议和参考作品：\n\n` + 
+        syncData.map((i, idx) => `${idx + 1}. 内容：${i.content}\n   平台：${i.platform} | 类型：${i.type} | 题材：${i.subject}`).join('\n\n') +
+        `\n\n处理后更新到 GitHub：howardrock88/inspiration-tracker/inspirations.json`;
+      
+      // 复制到剪贴板
+      navigator.clipboard.writeText(text).then(() => {
+        alert('已复制到剪贴板！\n\n把这段内容发送给 Agent，他会为你生成建议并更新到 GitHub。');
+      }).catch(() => {
+        // 如果剪贴板失败，显示在弹窗
+        prompt('请复制以下内容发送给 Agent：', text);
+      });
     }
 
     // 渲染筛选器
