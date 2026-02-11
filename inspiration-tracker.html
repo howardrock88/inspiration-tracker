@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💡 灵感库 - 创作灵感管理</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Noto Sans SC', sans-serif; }
+    .card-enter { animation: slideIn 0.3s ease-out; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-violet-50 to-pink-50 min-h-screen">
+  <div id="app" class="container mx-auto px-4 py-8 max-w-6xl">
+    <!-- 头部 -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800 flex items-center gap-2">
+          <span class="text-4xl">💡</span> 灵感库
+        </h1>
+        <p class="text-gray-500 mt-1">记录创作灵感，AI 辅助创作建议</p>
+      </div>
+      <button onclick="openModal()" class="flex items-center gap-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white px-6 py-3 rounded-xl font-medium hover:shadow-lg transition-all cursor-pointer">
+        <span>➕</span> 添加灵感
+      </button>
+    </div>
+
+    <!-- 统计 -->
+    <div class="grid grid-cols-3 gap-4 mb-6">
+      <div class="bg-white rounded-xl p-4 shadow-sm">
+        <div class="text-3xl font-bold text-gray-800" id="stat-total">0</div>
+        <div class="text-gray-500 text-sm">总灵感</div>
+      </div>
+      <div class="bg-white rounded-xl p-4 shadow-sm">
+        <div class="text-3xl font-bold text-orange-500" id="stat-pending">0</div>
+        <div class="text-gray-500 text-sm">待创作</div>
+      </div>
+      <div class="bg-white rounded-xl p-4 shadow-sm">
+        <div class="text-3xl font-bold text-green-500" id="stat-done">0</div>
+        <div class="text-gray-500 text-sm">已发布</div>
+      </div>
+    </div>
+
+    <!-- 搜索和筛选 -->
+    <div class="bg-white rounded-xl p-4 shadow-sm mb-6">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="flex-1 relative">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
+          <input type="text" id="search" placeholder="搜索灵感..." oninput="renderList()" 
+            class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500">
+        </div>
+      </div>
+      
+      <div class="flex flex-wrap gap-2 mt-4" id="filters">
+        <!-- 筛选器会动态生成 -->
+      </div>
+    </div>
+
+    <!-- 灵感列表 -->
+    <div id="list" class="grid gap-4"></div>
+
+    <!-- 数据管理 -->
+    <div class="mt-8 p-4 bg-gray-50 rounded-xl">
+      <div class="flex flex-wrap gap-4 justify-between items-center">
+        <span class="text-sm text-gray-500">💾 数据已保存在浏览器本地</span>
+        <div class="flex gap-2">
+          <button onclick="exportData()" class="px-4 py-2 text-sm bg-white border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">导出数据</button>
+          <button onclick="importData()" class="px-4 py-2 text-sm bg-white border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">导入数据</button>
+          <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 弹窗 -->
+  <div id="modal" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 max-h-[90vh] overflow-y-auto">
+      <h2 class="text-xl font-bold mb-4">添加新灵感</h2>
+      
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">灵感内容</label>
+          <textarea id="new-content" rows="3" placeholder="描述你的创作灵感..." 
+            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500"></textarea>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">平台</label>
+            <select id="new-platform" class="w-full px-4 py-2 border border-gray-200 rounded-xl">
+              <option value="小红书">小红书</option>
+              <option value="微信">微信</option>
+              <option value="微博">微博</option>
+              <option value="即刻">即刻</option>
+              <option value="B站">B站</option>
+              <option value="其他">其他</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">类型</label>
+            <select id="new-type" class="w-full px-4 py-2 border border-gray-200 rounded-xl">
+              <option value="文字">文字</option>
+              <option value="视频">视频</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">题材</label>
+            <select id="new-subject" class="w-full px-4 py-2 border border-gray-200 rounded-xl">
+              <option value="资讯">资讯</option>
+              <option value="测评">测评</option>
+              <option value="长文">长文</option>
+              <option value="个人分享">个人分享</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">状态</label>
+            <select id="new-status" class="w-full px-4 py-2 border border-gray-200 rounded-xl">
+              <option value="待创作">待创作</option>
+              <option value="进行中">进行中</option>
+              <option value="已发布">已发布</option>
+              <option value="归档">归档</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flex gap-3 mt-6">
+        <button onclick="closeModal()" class="flex-1 px-4 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer">取消</button>
+        <button onclick="addInspiration()" class="flex-1 px-4 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl font-medium cursor-pointer" id="save-btn">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 数据存储
+    let inspirations = JSON.parse(localStorage.getItem('inspirations') || '[]');
+
+    // 创作建议模板
+    const suggestionTemplates = {
+      小红书: {
+        文字: {
+          资讯: ['「XX领域最新消息，3分钟看懂」', '「揭秘：XX背后的真相」', '「2024年XX趋势，不看后悔」'],
+          测评: ['「XX天使用感受｜真实测评」', '「XX到底值不值？买前必看」', '「ChatGPT vs Claude vs XX 横向测评」'],
+          长文: ['「一篇讲透XX，建议收藏」', '「深度｜XX的全方位解读」'],
+          个人分享: ['「普通人XX的真实经历」', '「XX1年，我后悔没早点知道」', '「聊聊XX这件小事」']
+        },
+        视频: {
+          资讯: ['「60秒XX快讯」', '「XX新闻解读」'],
+          测评: ['「XX开箱/测评视频」', '「XX对比实测」'],
+          长文: ['「XX深度vlog」', '「XX全攻略」'],
+          个人分享: ['「我的XX日常volg」', '「XX挑战/体验记录」']
+        }
+      },
+      微信: {
+        文字: {
+          资讯: ['「XX解读：一场行业变革」', '「重磅｜XX最新消息」'],
+          测评: ['「深度测评｜XX到底好不好」', '「XX横评：哪款最适合你」'],
+          长文: ['「万字长文｜XX深度解析」', '「一文读懂XX」'],
+          个人分享: ['「我的XX故事」', '「一个普通人的XX经历」']
+        },
+        视频: {
+          资讯: ['「XX视频新闻」'],
+          测评: ['「XX视频测评」'],
+          长文: ['「XX深度访谈/纪录片」'],
+          个人分享: ['「XX人物专访」', '「我的XX故事视频版」']
+        }
+      },
+      其他: {
+        文字: {
+          资讯: ['「XX快讯」', '「行业动态｜XX」'],
+          测评: ['「XX测评」', '「XX对比」'],
+          长文: ['「XX深度好文」', '「关于XX的一些思考」'],
+          个人分享: ['「我的XX」', '「聊聊XX」']
+        },
+        视频: {
+          资讯: ['「XX视频快讯」'],
+          测评: ['「XX视频测评」'],
+          长文: ['「XX深度视频」'],
+          个人分享: ['「XX vlog」', '「XX日常」']
+        }
+      }
+    };
+
+    // 筛选配置
+    const filters = {
+      platform: { label: '平台', options: ['全部', '小红书', '微信', '微博', '即刻', 'B站', '其他'] },
+      type: { label: '类型', options: ['全部', '文字', '视频'] },
+      subject: { label: '题材', options: ['全部', '资讯', '测评', '长文', '个人分享'] },
+      status: { label: '状态', options: ['全部', '待创作', '进行中', '已发布', '归档'] }
+    };
+
+    let currentFilters = { platform: '全部', type: '全部', subject: '全部', status: '全部' };
+
+    // 初始化
+    function init() {
+      renderFilters();
+      renderList();
+      updateStats();
+    }
+
+    // 渲染筛选器
+    function renderFilters() {
+      let html = '';
+      for (const [key, config] of Object.entries(filters)) {
+        html += `<div class="flex items-center gap-2">
+          <span class="text-sm text-gray-500">${config.label}：</span>
+          <select onchange="updateFilter('${key}', this.value)" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 bg-white">
+            ${config.options.map(o => `<option value="${o}" ${currentFilters[key] === o ? 'selected' : ''}>${o}</option>`).join('')}
+          </select>
+        </div>`;
+      }
+      document.getElementById('filters').innerHTML = html;
+    }
+
+    // 更新筛选
+    function updateFilter(key, value) {
+      currentFilters[key] = value;
+      renderList();
+    }
+
+    // 生成创作建议
+    function generateSuggestions(platform, type, subject) {
+      const p = suggestionTemplates[platform] ? platform : '其他';
+      const t = suggestionTemplates[p][type] ? type : '文字';
+      const s = suggestionTemplates[p][t][subject] ? subject : '个人分享';
+      return suggestionTemplates[p][t][s] || suggestionTemplates['其他']['文字']['个人分享'];
+    }
+
+    // 渲染列表
+    function renderList() {
+      const search = document.getElementById('search').value.toLowerCase();
+      const list = document.getElementById('list');
+      
+      const filtered = inspirations.filter(item => {
+        const matchesSearch = item.content.toLowerCase().includes(search);
+        const matchesPlatform = currentFilters.platform === '全部' || item.platform === currentFilters.platform;
+        const matchesType = currentFilters.type === '全部' || item.type === currentFilters.type;
+        const matchesSubject = currentFilters.subject === '全部' || item.subject === currentFilters.subject;
+        const matchesStatus = currentFilters.status === '全部' || item.status === currentFilters.status;
+        return matchesSearch && matchesPlatform && matchesType && matchesSubject && matchesStatus;
+      });
+
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div class="text-center py-12 text-gray-400">
+            <div class="text-6xl mb-4">💡</div>
+            <p>还没有灵感，开始记录你的第一个想法吧！</p>
+          </div>`;
+        return;
+      }
+
+      list.innerHTML = filtered.map(item => `
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-shadow card-enter">
+          <div class="p-5">
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="px-3 py-1 bg-pink-100 text-pink-700 rounded-full text-sm font-medium">${item.platform}</span>
+              <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">${item.type}</span>
+              <span class="px-3 py-1 bg-violet-100 text-violet-700 rounded-full text-sm font-medium">${item.subject}</span>
+              <span class="px-3 py-1 rounded-full text-sm font-medium ${item.status === '待创作' ? 'bg-orange-100 text-orange-700' : item.status === '进行中' ? 'bg-blue-100 text-blue-700' : item.status === '已发布' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}">${item.status}</span>
+            </div>
+            <p class="text-gray-800 text-lg mb-3">${item.content}</p>
+            <div class="bg-gradient-to-r from-violet-50 to-pink-50 rounded-xl p-4 mb-3">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-lg">💡</span>
+                <span class="font-medium text-gray-700">创作建议</span>
+              </div>
+              <div class="space-y-1">
+                ${item.suggestions.map(s => `<div class="text-sm text-gray-600 flex items-start gap-2"><span class="text-violet-400">•</span>${s}</div>`).join('')}
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-gray-100">
+              <span class="text-sm text-gray-400">${item.createdAt}</span>
+              <div class="flex gap-2">
+                <select onchange="updateStatus('${item.id}', this.value)" class="px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 bg-white">
+                  <option value="待创作" ${item.status === '待创作' ? 'selected' : ''}>待创作</option>
+                  <option value="进行中" ${item.status === '进行中' ? 'selected' : ''}>进行中</option>
+                  <option value="已发布" ${item.status === '已发布' ? 'selected' : ''}>已发布</option>
+                  <option value="归档" ${item.status === '归档' ? 'selected' : ''}>归档</option>
+                </select>
+                <button onclick="deleteInspiration('${item.id}')" class="px-3 py-1.5 text-red-500 hover:bg-red-50 rounded-lg text-sm transition-colors cursor-pointer">🗑️ 删除</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 更新统计
+    function updateStats() {
+      document.getElementById('stat-total').textContent = inspirations.length;
+      document.getElementById('stat-pending').textContent = inspirations.filter(i => i.status === '待创作').length;
+      document.getElementById('stat-done').textContent = inspirations.filter(i => i.status === '已发布').length;
+    }
+
+    // 添加灵感
+    function addInspiration() {
+      const content = document.getElementById('new-content').value.trim();
+      if (!content) return;
+      
+      const platform = document.getElementById('new-platform').value;
+      const type = document.getElementById('new-type').value;
+      const subject = document.getElementById('new-subject').value;
+      const status = document.getElementById('new-status').value;
+      
+      const id = Date.now().toString();
+      const suggestions = generateSuggestions(platform, type, subject);
+      
+      const item = { id, content, platform, type, subject, status, suggestions, createdAt: new Date().toLocaleString('zh-CN') };
+      inspirations.unshift(item);
+      localStorage.setItem('inspirations', JSON.stringify(inspirations));
+      
+      closeModal();
+      renderList();
+      updateStats();
+    }
+
+    // 更新状态
+    function updateStatus(id, status) {
+      const item = inspirations.find(i => i.id === id);
+      if (item) {
+        item.status = status;
+        localStorage.setItem('inspirations', JSON.stringify(inspirations));
+        updateStats();
+      }
+    }
+
+    // 删除
+    function deleteInspiration(id) {
+      if (confirm('确定删除这个灵感吗？')) {
+        inspirations = inspirations.filter(i => i.id !== id);
+        localStorage.setItem('inspirations', JSON.stringify(inspirations));
+        renderList();
+        updateStats();
+      }
+    }
+
+    // 弹窗
+    function openModal() {
+      document.getElementById('modal').classList.remove('hidden');
+      document.getElementById('new-content').value = '';
+    }
+    
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+    }
+
+    // 导出
+    function exportData() {
+      const data = JSON.stringify(inspirations, null, 2);
+      const blob = new Blob([data], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `灵感库-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+    }
+
+    // 导入
+    function importData() {
+      document.getElementById('import-file').click();
+    }
+    
+    function handleImport(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (Array.isArray(data)) {
+            inspirations = data;
+            localStorage.setItem('inspirations', JSON.stringify(inspirations));
+            renderList();
+            updateStats();
+            alert('导入成功！');
+          }
+        } catch (err) {
+          alert('导入失败，文件格式错误');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // 启动
+    init();
+  </script>
+</body>
+</html>
