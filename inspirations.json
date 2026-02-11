@@ -1,0 +1,46 @@
+[
+  {
+    "id": "1739260800000",
+    "content": "用 openclaw 创建微信机器人，在群里定时更新新闻",
+    "platform": "微信",
+    "type": "文字",
+    "subject": "教程",
+    "status": "待创作",
+    "createdAt": "2026-02-11 12:40",
+    "suggestions": {
+      "titles": [
+        "「用 OpenClaw 打造微信新闻机器人」完整教程",
+        "微信群定时推送新闻？一个小工具搞定",
+        "从0到1：微信群新闻机器人搭建指南"
+      ],
+      "angles": [
+        "OpenClaw 介绍 + 机器人搭建",
+        "定时推送技术实现",
+        "实用场景：资讯聚合、团队协作"
+      ],
+      "structure": [
+        "需求分析 → 技术选型 → 搭建步骤 → 效果展示 → 进阶建议",
+        "背景 → 问题 → 解决方案 → 代码演示 → 总结"
+      ],
+      "platform": {
+        "length": "2000-3500字",
+        "style": "技术干货、步骤清晰、图文并茂",
+        "structure": "开头引入痛点 → 解决方案介绍 → 详细步骤 → 代码/配置 → 效果演示 → 总结"
+      },
+      "referenceWorks": [
+        {
+          "title": "ChatGPT-Next-Web - GitHub",
+          "url": "https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web",
+          "desc": "开源的 ChatGPT 界面，支持多平台部署",
+          "stats": "⭐ 80,000+ stars"
+        },
+        {
+          "title": "WechatRobot - Python 微信机器人",
+          "url": "https://github.com/mouday/Python-WXBArticle",
+          "desc": "Python 微信机器人框架，支持文章推送",
+          "stats": "⭐ 2,300+ stars"
+        }
+      ]
+    }
+  }
+]
