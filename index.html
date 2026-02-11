@@ -13,6 +13,11 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    .suggestion-section { border-left: 3px solid; }
+    .suggestion-title { border-left-color: #f59e0b; }
+    .suggestion-content { border-left-color: #8b5cf6; }
+    .suggestion-structure { border-left-color: #10b981; }
+    .suggestion-style { border-left-color: #ec4899; }
   </style>
 </head>
 <body class="bg-gradient-to-br from-violet-50 to-pink-50 min-h-screen">
@@ -56,9 +61,7 @@
         </div>
       </div>
       
-      <div class="flex flex-wrap gap-2 mt-4" id="filters">
-        <!-- 筛选器会动态生成 -->
-      </div>
+      <div class="flex flex-wrap gap-2 mt-4" id="filters"></div>
     </div>
 
     <!-- 灵感列表 -->
@@ -84,8 +87,8 @@
       
       <div class="space-y-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">灵感内容</label>
-          <textarea id="new-content" rows="3" placeholder="描述你的创作灵感..." 
+          <label class="block text-sm font-medium text-gray-700 mb-1">灵感内容 <span class="text-red-500">*</span></label>
+          <textarea id="new-content" rows="3" placeholder="描述你的创作灵感... 例如：分享我用 AI 工具提升工作效率的经历" 
             class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500"></textarea>
         </div>
         
@@ -134,7 +137,17 @@
       
       <div class="flex gap-3 mt-6">
         <button onclick="closeModal()" class="flex-1 px-4 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer">取消</button>
-        <button onclick="addInspiration()" class="flex-1 px-4 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl font-medium cursor-pointer" id="save-btn">保存</button>
+        <button onclick="generateSuggestionsPreview()" class="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-violet-500 text-white rounded-xl font-medium cursor-pointer">✨ 生成建议</button>
+        <button onclick="addInspiration()" class="flex-1 px-4 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-xl font-medium cursor-pointer" id="save-btn" disabled>保存</button>
+      </div>
+      
+      <!-- 创作建议预览 -->
+      <div id="suggestion-preview" class="mt-4 p-4 bg-gradient-to-r from-amber-50 to-violet-50 rounded-xl hidden">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-lg">💡</span>
+          <span class="font-bold text-gray-700">AI 创作建议预览</span>
+        </div>
+        <div id="suggestion-content" class="space-y-3"></div>
       </div>
     </div>
   </div>
@@ -142,51 +155,41 @@
   <script>
     // 数据存储
     let inspirations = JSON.parse(localStorage.getItem('inspirations') || '[]');
-
-    // 创作建议模板
-    const suggestionTemplates = {
-      小红书: {
-        文字: {
-          资讯: ['「XX领域最新消息，3分钟看懂」', '「揭秘：XX背后的真相」', '「2024年XX趋势，不看后悔」'],
-          测评: ['「XX天使用感受｜真实测评」', '「XX到底值不值？买前必看」', '「ChatGPT vs Claude vs XX 横向测评」'],
-          长文: ['「一篇讲透XX，建议收藏」', '「深度｜XX的全方位解读」'],
-          个人分享: ['「普通人XX的真实经历」', '「XX1年，我后悔没早点知道」', '「聊聊XX这件小事」']
-        },
-        视频: {
-          资讯: ['「60秒XX快讯」', '「XX新闻解读」'],
-          测评: ['「XX开箱/测评视频」', '「XX对比实测」'],
-          长文: ['「XX深度vlog」', '「XX全攻略」'],
-          个人分享: ['「我的XX日常volg」', '「XX挑战/体验记录」']
-        }
+    
+    // 关键词分析
+    const keywordPatterns = {
+      AI工具: {
+        titles: ['AI工具箱｜', '救命！', '后悔没早点知道', '效率提升', '打工人必备'],
+        angles: ['工具横向对比', '新手入门指南', '避坑建议', '替代方案', '免费vs付费'],
+        structures: ['问题引入 → 解决方案 → 效果展示 → 使用建议', '痛点分析 → 推荐工具 → 实操演示 → 总结']
       },
-      微信: {
-        文字: {
-          资讯: ['「XX解读：一场行业变革」', '「重磅｜XX最新消息」'],
-          测评: ['「深度测评｜XX到底好不好」', '「XX横评：哪款最适合你」'],
-          长文: ['「万字长文｜XX深度解析」', '「一文读懂XX」'],
-          个人分享: ['「我的XX故事」', '「一个普通人的XX经历」']
-        },
-        视频: {
-          资讯: ['「XX视频新闻」'],
-          测评: ['「XX视频测评」'],
-          长文: ['「XX深度访谈/纪录片」'],
-          个人分享: ['「XX人物专访」', '「我的XX故事视频版」']
-        }
+      效率: {
+        titles: ['时间管理', '效率翻倍', '告别拖延', '自律清单', '专注力'],
+        angles: ['早起routine', '番茄工作法', '任务管理', '精力管理', '习惯养成'],
+        structures: ['现状分析 → 问题诊断 → 方法推荐 → 行动计划', '个人经历 → 心得总结 → 技巧分享']
       },
-      其他: {
-        文字: {
-          资讯: ['「XX快讯」', '「行业动态｜XX」'],
-          测评: ['「XX测评」', '「XX对比」'],
-          长文: ['「XX深度好文」', '「关于XX的一些思考」'],
-          个人分享: ['「我的XX」', '「聊聊XX」']
-        },
-        视频: {
-          资讯: ['「XX视频快讯」'],
-          测评: ['「XX视频测评」'],
-          长文: ['「XX深度视频」'],
-          个人分享: ['「XX vlog」', '「XX日常」']
-        }
+      学习: {
+        titles: ['学习干货', '认知升级', '深度思考', '知识体系', '成长记录'],
+        angles: ['学习方法论', '阅读分享', '课程评测', '技能提升', '思维模型'],
+        structures: ['问题提出 → 解决思路 → 案例分析 → 行动建议', '主题拆解 → 知识点梳理 → 推荐资源']
+      },
+      测评: {
+        titles: ['真实测评', '使用体验', '深度对比', '优缺点', '购买建议'],
+        angles: ['外观设计', '功能体验', '性价比分析', '适用人群', '竞品对比'],
+        structures: ['购买背景 → 开箱体验 → 核心功能 → 总结建议', '需求分析 → 候选对比 → 最终选择 → 使用感受']
+      },
+      日常: {
+        titles: ['日常vlog', '生活分享', '好物推荐', '租房改造', '独居生活'],
+        angles: ['收纳技巧', '家居好物', '生活仪式感', '省钱攻略', '氛围营造'],
+        structures: ['场景描述 → 推荐清单 → 使用感受', '问题 → 解决方案 → 效果展示']
       }
+    };
+
+    // 默认模板
+    const defaultTemplates = {
+      titles: ['「XX主题」一篇讲透', '关于XX的一些思考', 'XX全攻略｜建议收藏'],
+      angles: ['从0到1入门', '常见误区', '进阶技巧', '实用工具推荐'],
+      structures: ['问题 → 分析 → 解决方案 → 总结', '背景 → 核心内容 → 案例 → 建议']
     };
 
     // 筛选配置
@@ -198,6 +201,54 @@
     };
 
     let currentFilters = { platform: '全部', type: '全部', subject: '全部', status: '全部' };
+
+    // 分析内容关键词
+    function analyzeContent(content) {
+      const lowerContent = content.toLowerCase();
+      const matched = [];
+      
+      for (const [keyword, templates] of Object.entries(keywordPatterns)) {
+        if (lowerContent.includes(keyword.toLowerCase())) {
+          matched.push({ keyword, templates });
+        }
+      }
+      
+      return matched.length > 0 ? matched : null;
+    }
+
+    // 生成定制化建议
+    function generateSuggestions(content, platform, type, subject) {
+      const matched = analyzeContent(content);
+      
+      // 获取模板
+      const template = matched 
+        ? matched[0].templates 
+        : defaultTemplates;
+      
+      // 根据平台调整
+      const platformAdjustments = {
+        '小红书': { length: '300-500字/篇', style: '轻松活泼、emoji丰富、口语化', structure: '开头钩子 → 干货输出 → 结尾互动' },
+        '微信': { length: '1500-3000字', style: '专业深度、逻辑清晰、有理有据', structure: '背景铺垫 → 核心论述 → 案例支撑 → 总结升华' },
+        '微博': { length: '100-200字', style: '观点鲜明、话题tag、互动性强', structure: '观点 → 补充说明 → 话题引导' },
+        'B站': { length: '视频脚本', style: '口语化、节奏感、适当玩梗', structure: '开场吸引 → 内容展开 → 总结互动' },
+        '其他': { length: '自由发挥', style: '符合平台调性', structure: '自定' }
+      };
+      
+      const adjustment = platformAdjustments[platform] || platformAdjustments['其他'];
+      
+      // 生成建议
+      return {
+        titles: template.titles || defaultTemplates.titles,
+        angles: template.angles || defaultTemplates.angles,
+        structure: template.structures || defaultTemplates.structures,
+        platform: adjustment
+      };
+    }
+
+    // 生成标题建议
+    function formatTitles(titles, context) {
+      return titles.map(t => t.replace('XX', context).replace('XX', context)).slice(0, 3);
+    }
 
     // 初始化
     function init() {
@@ -224,14 +275,6 @@
     function updateFilter(key, value) {
       currentFilters[key] = value;
       renderList();
-    }
-
-    // 生成创作建议
-    function generateSuggestions(platform, type, subject) {
-      const p = suggestionTemplates[platform] ? platform : '其他';
-      const t = suggestionTemplates[p][type] ? type : '文字';
-      const s = suggestionTemplates[p][t][subject] ? subject : '个人分享';
-      return suggestionTemplates[p][t][s] || suggestionTemplates['其他']['文字']['个人分享'];
     }
 
     // 渲染列表
@@ -267,15 +310,10 @@
               <span class="px-3 py-1 rounded-full text-sm font-medium ${item.status === '待创作' ? 'bg-orange-100 text-orange-700' : item.status === '进行中' ? 'bg-blue-100 text-blue-700' : item.status === '已发布' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}">${item.status}</span>
             </div>
             <p class="text-gray-800 text-lg mb-3">${item.content}</p>
-            <div class="bg-gradient-to-r from-violet-50 to-pink-50 rounded-xl p-4 mb-3">
-              <div class="flex items-center gap-2 mb-2">
-                <span class="text-lg">💡</span>
-                <span class="font-medium text-gray-700">创作建议</span>
-              </div>
-              <div class="space-y-1">
-                ${item.suggestions.map(s => `<div class="text-sm text-gray-600 flex items-start gap-2"><span class="text-violet-400">•</span>${s}</div>`).join('')}
-              </div>
-            </div>
+            
+            <!-- AI 创作建议 -->
+            ${renderSuggestions(item)}
+            
             <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-gray-100">
               <span class="text-sm text-gray-400">${item.createdAt}</span>
               <div class="flex gap-2">
@@ -291,6 +329,111 @@
           </div>
         </div>
       `).join('');
+    }
+
+    // 渲染建议
+    function renderSuggestions(item) {
+      if (!item.suggestions || !item.suggestions.titles) return '';
+      
+      const s = item.suggestions;
+      return `
+        <div class="bg-gradient-to-r from-amber-50 to-violet-50 rounded-xl p-4 mb-3">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-lg">💡</span>
+            <span class="font-bold text-gray-700">AI 创作建议</span>
+            <span class="text-xs text-gray-400 ml-auto">${item.platform} · ${item.type}</span>
+          </div>
+          
+          <div class="grid gap-3">
+            <!-- 标题建议 -->
+            <div class="suggestion-section suggestion-title pl-3">
+              <div class="text-xs font-medium text-amber-600 mb-1">📝 标题建议</div>
+              <div class="text-sm text-gray-700 space-y-1">
+                ${s.titles.map(t => `<div>• ${t}</div>`).join('')}
+              </div>
+            </div>
+            
+            <!-- 选题角度 -->
+            <div class="suggestion-section suggestion-content pl-3">
+              <div class="text-xs font-medium text-violet-600 mb-1">🎯 选题角度</div>
+              <div class="text-sm text-gray-700 space-y-1">
+                ${s.angles.map(a => `<div>• ${a}</div>`).join('')}
+              </div>
+            </div>
+            
+            <!-- 内容结构 -->
+            <div class="suggestion-section suggestion-structure pl-3">
+              <div class="text-xs font-medium text-emerald-600 mb-1">📐 内容结构</div>
+              <div class="text-sm text-gray-700 space-y-1">
+                ${s.structure.map(st => `<div>• ${st}</div>`).join('')}
+              </div>
+            </div>
+            
+            <!-- 平台适配 -->
+            <div class="suggestion-section suggestion-style pl-3">
+              <div class="text-xs font-medium text-pink-600 mb-1">✨ 平台适配</div>
+              <div class="text-sm text-gray-700 space-y-1">
+                <div><strong>篇幅：</strong>${s.platform?.length || '自由'}</div>
+                <div><strong>风格：</strong>${s.platform?.style || '符合平台调性'}</div>
+                <div><strong>结构：</strong>${s.platform?.structure || '自定'}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 生成建议预览
+    function generateSuggestionsPreview() {
+      const content = document.getElementById('new-content').value.trim();
+      if (!content) {
+        alert('请先描述你的灵感内容');
+        return;
+      }
+      
+      const platform = document.getElementById('new-platform').value;
+      const type = document.getElementById('new-type').value;
+      const subject = document.getElementById('new-subject').value;
+      
+      const suggestions = generateSuggestions(content, platform, type, subject);
+      
+      // 显示预览
+      const preview = document.getElementById('suggestion-preview');
+      const previewContent = document.getElementById('suggestion-content');
+      preview.classList.remove('hidden');
+      
+      previewContent.innerHTML = `
+        <div class="grid gap-3">
+          <div class="suggestion-section suggestion-title pl-3">
+            <div class="text-xs font-medium text-amber-600 mb-1">📝 标题建议</div>
+            <div class="text-sm text-gray-700 space-y-1">
+              ${suggestions.titles.map(t => `<div>• ${t}</div>`).join('')}
+            </div>
+          </div>
+          <div class="suggestion-section suggestion-content pl-3">
+            <div class="text-xs font-medium text-violet-600 mb-1">🎯 选题角度</div>
+            <div class="text-sm text-gray-700 space-y-1">
+              ${suggestions.angles.map(a => `<div>• ${a}</div>`).join('')}
+            </div>
+          </div>
+          <div class="suggestion-section suggestion-structure pl-3">
+            <div class="text-xs font-medium text-emerald-600 mb-1">📐 内容结构</div>
+            <div class="text-sm text-gray-700 space-y-1">
+              ${suggestions.structure.map(st => `<div>• ${st}</div>`).join('')}
+            </div>
+          </div>
+          <div class="suggestion-section suggestion-style pl-3">
+            <div class="text-xs font-medium text-pink-600 mb-1">✨ 平台适配</div>
+            <div class="text-sm text-gray-700 space-y-1">
+              <div><strong>篇幅：</strong>${suggestions.platform.length}</div>
+              <div><strong>风格：</strong>${suggestions.platform.style}</div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      // 启用保存按钮
+      document.getElementById('save-btn').disabled = false;
     }
 
     // 更新统计
@@ -311,9 +454,19 @@
       const status = document.getElementById('new-status').value;
       
       const id = Date.now().toString();
-      const suggestions = generateSuggestions(platform, type, subject);
+      const suggestions = generateSuggestions(content, platform, type, subject);
       
-      const item = { id, content, platform, type, subject, status, suggestions, createdAt: new Date().toLocaleString('zh-CN') };
+      const item = { 
+        id, 
+        content, 
+        platform, 
+        type, 
+        subject, 
+        status, 
+        suggestions, 
+        createdAt: new Date().toLocaleString('zh-CN') 
+      };
+      
       inspirations.unshift(item);
       localStorage.setItem('inspirations', JSON.stringify(inspirations));
       
@@ -346,6 +499,8 @@
     function openModal() {
       document.getElementById('modal').classList.remove('hidden');
       document.getElementById('new-content').value = '';
+      document.getElementById('suggestion-preview').classList.add('hidden');
+      document.getElementById('save-btn').disabled = true;
     }
     
     function closeModal() {
