@@ -1,5 +1,15 @@
 [
   {
+    "id": "1770940404206",
+    "content": "用openclaw创建一个多模型聚合入口",
+    "platform": "小红书",
+    "type": "文字",
+    "subject": "个人分享",
+    "status": "待创作",
+    "suggestions": null,
+    "createdAt": "2026/2/13 07:53:24"
+  },
+  {
     "id": "1739260800000",
     "content": "用 openclaw 创建微信机器人，在群里定时更新新闻",
     "platform": "微信",
@@ -42,5 +52,35 @@
         }
       ]
     }
+  },
+  {
+    "id": "1770795000675",
+    "content": "用openclaw创建闪念胶囊",
+    "platform": "小红书",
+    "type": "文字",
+    "subject": "个人分享",
+    "status": "待创作",
+    "suggestions": {
+      "titles": [
+        "OpenClaw 教程",
+        "用 OpenClaw 打造",
+        "OpenClaw 实战"
+      ],
+      "angles": [
+        "功能介绍",
+        "场景应用",
+        "进阶技巧"
+      ],
+      "structure": [
+        "背景 → 安装 → 配置 → 实战 → 总结"
+      ],
+      "platform": {
+        "length": "300-500字/篇",
+        "style": "轻松活泼、emoji丰富、口语化",
+        "structure": "开头钩子 → 干货输出 → 结尾互动"
+      },
+      "referenceWorks": []
+    },
+    "createdAt": "2026/2/11 15:30:00"
   }
 ]
