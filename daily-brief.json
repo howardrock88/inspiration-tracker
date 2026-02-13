@@ -1,0 +1,56 @@
+{
+  "date": "2026年2月13日",
+  "focus": [
+    {
+      "title": "OpenAI、Anthropic、Google罕见联手，共同推出AI创业加速器",
+      "desc": "三大AI巨头宣布共同推出F/ai创业加速器项目，Meta、Microsoft和Sequoia也参与其中。",
+      "source": "Inc www.inc.com"
+    },
+    {
+      "title": "Anthropic估值达3800亿美元",
+      "desc": "Anthropic估值跃升至3800亿美元，进一步缩小与OpenAI的差距。",
+      "source": "Click on Detroit"
+    }
+  ],
+  "funding": [
+    {
+      "title": "临界点获数亿元融资",
+      "desc": "灵巧手公司临界点完成新一轮数亿元融资，由头部互联网大厂领投、百度风投、云锋基金等跟投。",
+      "source": "36氪 36kr.com"
+    },
+    {
+      "title": "Onconetix收购Realbotix",
+      "desc": "2月12日，Onconetix宣布收购美国AI人形机器人公司Realbotix。",
+      "source": "Stock Titan"
+    }
+  ],
+  "tech": [
+    {
+      "title": "Google和奔驰联手支持Apollo人形机器人",
+      "desc": "Google DeepMind与Apptronik合作，将先进AI技术应用于Apollo人形机器人。",
+      "source": "Interesting Engineering"
+    },
+    {
+      "title": "嵩山少林寺机器人表演功夫",
+      "desc": "人形机器人在嵩山少林寺表演功夫，展示机器人技术与AI运动学习技术的结合。",
+      "source": "Times of India"
+    }
+  ],
+  "news": [
+    {
+      "title": "比尔·盖茨时隔两年半再度访华",
+      "desc": "2月11日，比尔·盖茨现身上海张江，聚焦全球健康与发展议题。",
+      "source": "IT之家"
+    },
+    {
+      "title": "荣耀前CEO赵明将加入千里科技董事会",
+      "desc": "赵明将任千里科技联席董事长，重点推进AI商业模式闭环战略。",
+      "source": "虎嗅"
+    },
+    {
+      "title": "Anthropic向AI监管组织捐赠2000万美元",
+      "desc": "Anthropic宣布向推动AI监管的组织捐赠2000万美元，用于2026年选举前的AI监管倡导。",
+      "source": "CNBC"
+    }
+  ]
+}
