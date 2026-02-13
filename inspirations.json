@@ -6,7 +6,40 @@
     "type": "文字",
     "subject": "个人分享",
     "status": "待创作",
-    "suggestions": null,
+    "suggestions": {
+      "titles": [
+        "用 OpenClaw 打造你的专属 AI 模型聚合入口",
+        "告别切换烦恼！一个工具聚合所有 AI 模型",
+        "OpenClaw 教程：多模型聚合原来这么简单"
+      ],
+      "angles": [
+        "OpenClaw 介绍 + 多模型聚合功能实操",
+        "如何用 OpenClaw 管理多个 AI 模型 API",
+        "效率提升：统一入口调用 GPT、Claude、DeepSeek"
+      ],
+      "structure": [
+        "痛点引入 → 解决方案介绍 → OpenClaw 功能演示 → 配置步骤 → 效果展示 → 进阶技巧"
+      ],
+      "platform": {
+        "length": "2000-3000字",
+        "style": "技术干货、步骤清晰、截图丰富",
+        "structure": "开头痛点 → 解决方案 → 详细教程 → 效果演示 → 总结"
+      },
+      "referenceWorks": [
+        {
+          "title": "支持 30+ AI 大模型！一站式聚合 GPT-4、Claude、DeepSeek",
+          "url": "https://zhuanlan.zhihu.com/p/24859688398",
+          "desc": "介绍多模型 API 聚合管理的解决方案",
+          "stats": "知乎专栏"
+        },
+        {
+          "title": "小红书开源首款多模态模型：看懂表情包与数学题",
+          "url": "https://zhidx.com/p/495825.html",
+          "desc": "小红书在多模态技术上的实践",
+          "stats": "智东西"
+        }
+      ]
+    },
     "createdAt": "2026/2/13 07:53:24"
   },
   {
