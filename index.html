@@ -186,8 +186,9 @@
     let currentFilters = { platform: '全部', type: '全部', subject: '全部', status: '全部' };
 
     // 初始化
-    function init() {
+    async function init() {
       renderFilters();
+      await syncFromGitHub(); // 自动从GitHub同步
       renderList();
       updateStats();
     }
