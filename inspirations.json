@@ -1,25 +1,5 @@
 [
   {
-    "id": "1771071834319",
-    "content": "全球机器人公司估值大盘点",
-    "platform": "微信",
-    "type": "文字",
-    "subject": "长文",
-    "status": "待创作",
-    "suggestions": null,
-    "createdAt": "2026/2/14 20:23:54"
-  },
-  {
-    "id": "1771071731009",
-    "content": "2026年机器人行业将上演大逃杀",
-    "platform": "微信",
-    "type": "文字",
-    "subject": "长文",
-    "status": "待创作",
-    "suggestions": null,
-    "createdAt": "2026/2/14 20:22:11"
-  },
-  {
     "id": "1770940404206",
     "content": "用openclaw创建一个多模型聚合入口",
     "platform": "小红书",
@@ -28,35 +8,49 @@
     "status": "待创作",
     "suggestions": {
       "titles": [
-        "用 OpenClaw 打造你的专属 AI 模型聚合入口",
-        "告别切换烦恼！一个工具聚合所有 AI 模型",
-        "OpenClaw 教程：多模型聚合原来这么简单"
+        "一个工具聚合所有 AI 模型！OpenClaw 多模型入口",
+        "告别模型切换烦恼！OpenClaw 让你一键切换 GPT/Claude/Gemini",
+        "OpenClaw 多模型聚合：AI 工具箱的终极形态"
       ],
       "angles": [
-        "OpenClaw 介绍 + 多模型聚合功能实操",
-        "如何用 OpenClaw 管理多个 AI 模型 API",
-        "效率提升：统一入口调用 GPT、Claude、DeepSeek"
+        "多模型切换的痛点与解决方案",
+        "OpenClaw 多模型功能实测",
+        "如何用 OpenClaw 提升 AI 使用效率",
+        "不同场景下如何选择最合适的模型"
       ],
       "structure": [
-        "痛点引入 → 解决方案介绍 → OpenClaw 功能演示 → 配置步骤 → 效果展示 → 进阶技巧"
+        "痛点引入 → 解决方案 → 功能演示 → 场景案例 → 总结",
+        "背景 → 市场分析 → 产品介绍 → 实操演示 → 进阶技巧"
       ],
       "platform": {
-        "length": "2000-3000字",
-        "style": "技术干货、步骤清晰、截图丰富",
-        "structure": "开头痛点 → 解决方案 → 详细教程 → 效果演示 → 总结"
+        "length": "1500-2500字",
+        "style": "技术干货、图文并茂、步骤清晰",
+        "structure": "开头痛点 → 解决方案介绍 → 详细步骤 → 效果展示 → 总结"
       },
       "referenceWorks": [
         {
-          "title": "支持 30+ AI 大模型！一站式聚合 GPT-4、Claude、DeepSeek",
-          "url": "https://zhuanlan.zhihu.com/p/24859688398",
-          "desc": "介绍多模型 API 聚合管理的解决方案",
-          "stats": "知乎专栏"
+          "title": "ChatGPT-Next-Web",
+          "url": "https://github.com/ChatGPTNextWeb/ChatGPTNextWeb",
+          "desc": "开源的多模型聊天界面，支持 GPT/Claude 等",
+          "stats": "⭐ 84,000+ stars"
         },
         {
-          "title": "ChatGPT-Next-Web - GitHub",
-          "url": "https://github.com/ChatGPTNextWeb/ChatGPTNext-Web",
-          "desc": "开源的 ChatGPT 界面，支持多平台部署",
-          "stats": "⭐ 80,000+ stars"
+          "title": "One API - 多模型聚合平台",
+          "url": "https://github.com/songquanpeng/one-api",
+          "desc": "统一接口调用 OpenAI、Claude 等多种模型",
+          "stats": "⭐ 12,000+ stars"
+        },
+        {
+          "title": "LibreChat - 开源 AI 聚合",
+          "url": "https://github.com/danny-avila/LibreChat",
+          "desc": "支持多平台、多模型的 AI 聊天界面",
+          "stats": "⭐ 32,000+ stars"
+        },
+        {
+          "title": "AI 模型评测对比",
+          "url": "https://lmsys.org/blog/2023-12-11-arena-leaderboard/",
+          "desc": "了解不同模型的能力差异",
+          "stats": "LMSYS Chatbot Arena"
         }
       ]
     },
@@ -132,7 +126,26 @@
         "style": "轻松活泼、emoji丰富、口语化",
         "structure": "开头钩子 → 干货输出 → 结尾互动"
       },
-      "referenceWorks": []
+      "referenceWorks": [
+        {
+          "title": "闪念胶囊 - 效率工具产品分析",
+          "url": "https://sspai.com/post/42174",
+          "desc": "一篇关于闪念胶囊的产品分析文章",
+          "stats": "少数派"
+        },
+        {
+          "title": "Notion AI 笔记助手",
+          "url": "https://www.notion.so/product/ai",
+          "desc": "AI 笔记工具的参考形态",
+          "stats": "Notion 官方"
+        },
+        {
+          "title": "Flomo 浮墨笔记",
+          "url": "https://flomoapp.com/",
+          "desc": "类似闪念胶囊的轻量笔记工具",
+          "stats": "竞品"
+        }
+      ]
     },
     "createdAt": "2026/2/11 15:30:00"
   }
