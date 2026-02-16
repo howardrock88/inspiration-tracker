@@ -1,4 +1,4 @@
-##6年2月 📰 20216日 行业早报
+## 📰 2026年2月16日 行业早报
 
 ---
 
@@ -20,13 +20,20 @@ AI正在尝试解答人类数学家正在研究的、从未发表过的原创问
 
 ### 💰 融资动态
 
-| 公司 | 融资 | 投资方 | 简介 |
-|------|------|--------|------|
-| Neysa (印度) | 12亿美元 | Blackstone | AI云平台，部署2万GPU |
-| Adapt | 1000万美元 | - | 旧金山AI计算机初创 |
-| Sarvam Edge | - | - | 印度端侧AI模型 |
-
+**Neysa (印度)** - 12亿美元
+- 投资方: Blackstone
+- 简介: AI云平台，部署2万GPU助力印度AI基础设施建设
 来源: Startup News FYI | https://startupnews.fyi/2026/02/16/blackstone-leads-1-2-billion-funding-round-in-ai-platform-neysa-ahead-of-india-ai-impact-summit-2026/
+
+**Adapt** - 1000万美元种子轮
+- 投资方: -
+- 简介: 旧金山AI计算机初创，致力于为企业构建AI专用计算机
+来源: OHSEM | https://ohsem.me/2026/02/adapt-raises-10m-seed-to-build-the-ai-computer-for-business/
+
+**Sarvam Edge** - (未披露)
+- 投资方: -
+- 简介: 印度端侧AI模型公司，致力于离线设备智能
+来源: Startup News FYI | https://startupnews.fyi/2026/02/15/sarvam-edge-indian-ai-firm-pushes-offline-models-to-reduce-cloud-spending-as-ai-impact-summit-nears/
 
 ---
 
