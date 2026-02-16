@@ -85,19 +85,29 @@
 
 ## 搜索策略
 
-### 关键词
-- **AI** - 人工智能、大模型、LLM (中英文)
-- **机器人/机器人** - 人形机器人、机器人硬件
-- **AI硬件** - GPU、芯片、算力
+### 三大信息来源（必须全部覆盖）
 
-### 搜索方式
-1. 使用 Brave Search API，`freshness: "pd"` 过滤过去24小时
-2. **中英文双语搜索**：
-   - 英文: "AI news February 15 2026", "robotics AI 2026"
-   - 中文: "AI 人工智能 新闻 2026年2月", "机器人 人形 2026"
-3. **X/Twitter 动态**: 搜索 "X Twitter AI news" 获取社交媒体热点
-4. 多轮搜索覆盖不同关键词组合
-5. 去重后只保留相关度高的新闻
+#### 1. Web Search (Brave API)
+- 使用 Brave Search API，`freshness: "pd"` 过滤过去24小时
+- 中英文双语搜索
+- 关键词：AI、机器人、人形机器人、AI硬件、GPU
+
+#### 2. RSS 订阅源
+- 运行脚本：`python3 ~/new/rss-monitor-v2.py`
+- 获取过去24小时内的最新文章
+- 筛选与AI、机器人、科技相关的内容
+
+#### 3. X/Twitter 动态
+- 运行脚本或手动搜索
+- 关注账号列表：`~/new/x-monitor-accounts.md`
+- 搜索格式：`from:OpenAI from:nvidia from:FigureRobot`
+- 重点关注：Sam Altman、Sundar Pichai、Elon Musk、黄仁勋等CEO账号
+
+### 合并去重
+1. 从三个来源收集新闻
+2. 合并去重（相同内容只保留一个来源）
+3. 筛选与AI、机器人、AI硬件相关的新闻
+4. 只保留前一天(24小时内)发布的新闻
 
 ### 新闻源优先级（共90+源）
 
