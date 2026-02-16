@@ -15,47 +15,56 @@
   "funding": [
     {
       "title": "印度AI创业公司Sarvam AI推出离线AI模型Sarvam Edge",
-      "desc": "2月14日，印度AI初创公司Sarvam AI发布全新离线AI堆栈Sarvam Edge，可在智能手机和其他消费级硬件上完全离线运行。",
-      "source": "CNBC TV18 | https://www.cnbctv18.com/technology/sarvam-ai-unveils-sarvam-edge-indian-ai-startup-bets-on-offline-on-device-models-to-cut-cloud-costs-ai-summit-ws-l-19850403.htm"
-    },
-    {
-      "title": "中国商业银行2025年累计实现净利润2.4万亿元",
-      "desc": "根据央行数据，2025年中国商业银行连续三个季度净息差保持在1.42%，累计实现净利润2.4万亿元。",
-      "source": "新浪财经 | https://finance.sina.com.cn/money/future/hyxh/2026-02-15/doc-inhmvzfq7432671.shtml"
+      "desc": "2月14日，印度AI初创公司Sarvam AI发布全新离线AI堆栈Sarvam Edge，可在智能手机上完全离线运行。",
+      "source": "CNBC TV18 | https://www.cnbctv18.com/technology/sarvam-ai-unveils-sarvam-edge"
     }
   ],
   "tech": [
     {
-      "title": "印度即将举办AI Impact Summit 2026",
-      "desc": "2月16日至20日，印度将在新德里Bharat Mandapam举办AI Impact Summit 2026。OpenAI CEO Sam Altman将出席并称赞印度具备成为全栈AI领导者的所有要素。",
-      "source": "India TV | https://www.indiatvnews.com/technology/news/india-ai-impact-expo-2026-pm-modi-inauguration-bharat-mandapam-2026-02-15-1030358"
+      "title": "印度举办AI Impact Summit 2026",
+      "desc": "2月16日至20日，印度将在新德里举办AI Impact Summit 2026，OpenAI CEO Sam Altman将出席。",
+      "source": "India TV | https://www.indiatvnews.com/technology/news/india-ai-impact-expo-2026"
     },
     {
-      "title": "Uber计划今年将配送业务扩展至七个新欧洲国家",
-      "desc": "据Financial Times报道，Uber计划今年将其配送业务扩展至七个新的欧洲国家。",
+      "title": "Uber计划将配送业务扩展至七个新欧洲国家",
+      "desc": "据Financial Times报道，Uber计划今年将其AI驱动的配送业务扩展至七个新的欧洲国家。",
       "source": "Reuters | https://www.reuters.com/technology/"
+    }
+  ],
+  "robotics": [
+    {
+      "title": "Boston Dynamics发布Atlas机器人最新技巧",
+      "desc": "2月14日，Boston Dynamics发布视频展示更新版Atlas人形机器人完成复杂体操动作。",
+      "source": "Hi-Tech Ukraine | https://hi-tech.ua/en/boston-dynamics-atlas-new-tricks/"
+    }
+  ],
+  "ai_hardware": [
+    {
+      "title": "研究人员开发出微型智能机器人",
+      "desc": "科学家创造出肉眼几乎看不见的微型机器人，能够自主感知、决策和移动，由光能驱动。",
+      "source": "ScienceDaily | https://www.sciencedaily.com/news/computers_math/artificial_intelligence/"
     }
   ],
   "news": [
     {
-      "title": "四大矿商铜资源争夺战升级，铜价走势受关注",
-      "desc": "近期四大矿商2025年产销报告出炉，三家铜产量同比增长。必和必拓上调产量区间，淡水河谷创新高，力拓超预期，福德士河加码收购。",
-      "source": "芝麻AI速递 | https://finance.sina.cn/headline/2026-02-15/detail-inhmvuxu4314408.d.html"
+      "title": "四大矿商铜资源争夺战升级",
+      "desc": "四大矿商2025年产销报告出炉，必和必拓上调产量区间，淡水河谷创新高。",
+      "source": "芝麻AI速递 | https://finance.sina.cn/headline/2026-02-15/"
     },
     {
       "title": "蛇年A股创十年来最佳表现",
-      "desc": "2025年2月至2026年2月，A股各主要板块普涨：上证指数涨25.58%，深证成指涨38.84%，创业板指涨58.73%，科创综指涨64.20%。",
-      "source": "新浪A股 | https://k.sina.com.cn/article_7857201856_1d45362c001902etuy.html"
+      "desc": "2025年2月至2026年2月，科创综指涨64.20%，创业板指涨58.73%。",
+      "source": "新浪A股 | https://k.sina.com.cn/article_7857201856"
     },
     {
-      "title": "供给收缩引发钨价跳涨，下游企业面临挑战",
-      "desc": "受矿产端供给收缩影响，钨价近期出现显著上涨，下游制造企业面临成本压力。",
-      "source": "芝麻AI速递 | https://finance.sina.cn/headline/2026-02-15/detail-inhmvuxu4314408.d.html"
+      "title": "供给收缩引发钨价跳涨",
+      "desc": "受矿产端供给收缩影响，钨价近期显著上涨，下游制造企业面临成本压力。",
+      "source": "芝麻AI速递 | https://finance.sina.cn/headline/2026-02-15/"
     }
   ],
   "sources_summary": {
-    "chinese": ["新浪财经", "新浪A股", "芝麻AI速递", "India TV"],
-    "english": ["AI Journal", "CNBC TV18", "Financial Express", "Reuters"],
-    "total_sources": 8
+    "chinese": ["新浪财经", "芝麻AI速递"],
+    "english": ["AI Journal", "CNBC TV18", "Financial Express", "Reuters", "ScienceDaily", "India TV", "Hi-Tech Ukraine"],
+    "total_sources": 9
   }
 }
