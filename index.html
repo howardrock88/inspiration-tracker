@@ -92,6 +92,32 @@
         .settings-panel.show { right: 0; }
         .settings-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
         .settings-close { float: right; cursor: pointer; font-size: 20px; }
+        
+        /* 折叠卡片样式 */
+        .day-card { background: #fff; border-radius: 16px; margin-bottom: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); cursor: pointer; transition: all 0.3s; }
+        .day-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
+        .day-card-header { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
+        .day-card-date { font-size: 16px; font-weight: 600; color: #1a202c; }
+        .day-card-arrow { font-size: 14px; color: #a0aec0; transition: transform 0.3s; }
+        .day-card.expanded .day-card-arrow { transform: rotate(180deg); }
+        
+        .day-card-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background: #fff; }
+        .day-card.expanded .day-card-content { max-height: 2000px; }
+        
+        .mini-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 16px; margin: 0 16px 16px; color: #fff; }
+        .mini-card-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; }
+        .mini-card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .mini-card-tag { font-size: 11px; padding: 3px 10px; background: rgba(255,255,255,0.2); border-radius: 20px; }
+        
+        .card-footer { padding: 12px 20px; background: #f7fafc; display: flex; justify-content: space-between; align-items: center; }
+        .date { font-size: 12px; color: #a0aec0; }
+        .actions { display: flex; gap: 8px; }
+        .action-btn { padding: 6px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 12px; background: #fff; cursor: pointer; transition: all 0.2s; }
+        .action-btn:hover { background: #f7fafc; }
+        .action-btn.delete { color: #e53e3e; border-color: #feb2b2; }
+        .action-btn.delete:hover { background: #fff5f5; }
+        
+        .status-select { padding: 6px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 12px; background: #fff; outline: none; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -293,34 +319,44 @@
             }
             
             list.innerHTML = filtered.map(item => `
-                <div class="card">
-                    <div class="card-header">
-                        <div class="tags">
-                            <span class="tag tag-platform">${item.platform}</span>
-                            <span class="tag tag-type">${item.type}</span>
-                            <span class="tag tag-subject">${item.subject}</span>
-                            <span class="tag tag-status ${item.status === '待创作' ? 'pending' : item.status === '进行中' ? 'doing' : item.status === '已发布' ? 'done' : ''}">${item.status}</span>
+                <div class="day-card" onclick="toggleCard(this)">
+                    <div class="day-card-header">
+                        <span class="day-card-date">${item.content.substring(0, 30)}${item.content.length > 30 ? '...' : ''}</span>
+                        <span class="day-card-arrow">▼</span>
+                    </div>
+                    <div class="mini-card">
+                        <div class="mini-card-tags">
+                            <span class="mini-card-tag">${item.platform}</span>
+                            <span class="mini-card-tag">${item.type}</span>
+                            <span class="mini-card-tag">${item.subject}</span>
+                            <span class="mini-card-tag">${item.status}</span>
                         </div>
                     </div>
-                    <div class="content">${item.content}</div>
-                    <div class="suggestions">
-                        <div class="suggestions-title">💡 创作建议</div>
-                        ${(item.suggestions || []).map(s => `<div class="suggestion-item"><span class="suggestion-bullet">•</span>${s}</div>`).join('')}
-                    </div>
-                    <div class="card-footer">
-                        <span class="date">${item.createdAt}</span>
-                        <div class="actions">
-                            <select class="status-select" onchange="updateStatus('${item.id}', this.value)">
-                                <option value="待创作" ${item.status === '待创作' ? 'selected' : ''}>待创作</option>
-                                <option value="进行中" ${item.status === '进行中' ? 'selected' : ''}>进行中</option>
-                                <option value="已发布" ${item.status === '已发布' ? 'selected' : ''}>已发布</option>
-                                <option value="归档" ${item.status === '归档' ? 'selected' : ''}>归档</option>
-                            </select>
-                            <button class="action-btn delete" onclick="deleteInspiration('${item.id}')">🗑️</button>
+                    <div class="day-card-content">
+                        <div class="content" style="padding: 0 20px;">${item.content}</div>
+                        <div class="suggestions">
+                            <div class="suggestions-title">💡 创作建议</div>
+                            ${(item.suggestions || []).map(s => `<div class="suggestion-item"><span class="suggestion-bullet">•</span>${s}</div>`).join('')}
+                        </div>
+                        <div class="card-footer">
+                            <span class="date">${item.createdAt}</span>
+                            <div class="actions">
+                                <select class="status-select" onclick="event.stopPropagation()" onchange="updateStatus('${item.id}', this.value)">
+                                    <option value="待创作" ${item.status === '待创作' ? 'selected' : ''}>待创作</option>
+                                    <option value="进行中" ${item.status === '进行中' ? 'selected' : ''}>进行中</option>
+                                    <option value="已发布" ${item.status === '已发布' ? 'selected' : ''}>已发布</option>
+                                    <option value="归档" ${item.status === '归档' ? 'selected' : ''}>归档</option>
+                                </select>
+                                <button class="action-btn delete" onclick="event.stopPropagation(); deleteInspiration('${item.id}')">🗑️</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             `).join('');
+        }
+        
+        function toggleCard(card) {
+            card.classList.toggle('expanded');
         }
         
         function updateStats() {
