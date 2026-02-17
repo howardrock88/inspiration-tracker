@@ -81,10 +81,38 @@
         .modal-btn.submit:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(102,126,234,0.4); }
         
         .footer { text-align: center; padding: 20px; color: rgba(255,255,255,0.7); font-size: 13px; }
+        
+        .sync-status { padding: 8px 16px; border-radius: 8px; font-size: 13px; margin-bottom: 16px; display: none; }
+        .sync-status.success { background: #c6f6d5; color: #276749; display: block; }
+        .sync-status.error { background: #fed7d7; color: #c53030; display: block; }
+        .sync-status.syncing { background: #bee3f8; color: #2b6cb0; display: block; }
+        
+        .settings-btn { position: fixed; top: 20px; right: 20px; background: rgba(255,255,255,0.2); border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 16px; }
+        .settings-panel { position: fixed; top: 0; right: -300px; width: 280px; height: 100%; background: #fff; box-shadow: -4px 0 20px rgba(0,0,0,0.2); padding: 20px; transition: right 0.3s; z-index: 200; }
+        .settings-panel.show { right: 0; }
+        .settings-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+        .settings-close { float: right; cursor: pointer; font-size: 20px; }
     </style>
 </head>
 <body>
     <div class="container">
+        <button class="settings-btn" onclick="toggleSettings()">⚙️</button>
+        
+        <div class="settings-panel" id="settings">
+            <span class="settings-close" onclick="toggleSettings()">×</span>
+            <div class="settings-title">⚙️ 设置</div>
+            <div class="form-group">
+                <label class="form-label">GitHub Token</label>
+                <input type="password" class="form-input" id="github-token" placeholder="输入 GitHub Personal Access Token">
+                <p style="font-size:12px;color:#718096;margin-top:6px;">需要 repo 权限，Token 存储在浏览器本地</p>
+            </div>
+            <button class="modal-btn submit" onclick="saveSettings()">保存设置</button>
+            <hr style="margin:20px 0;">
+            <button class="modal-btn submit" style="background:#48bb78;" onclick="syncToGithub()">🔄 立即同步到 GitHub</button>
+        </div>
+        
+        <div class="sync-status" id="sync-status"></div>
+        
         <h1>💡 灵感库</h1>
         <p class="subtitle">记录创作灵感，AI 辅助创作建议</p>
         
@@ -144,7 +172,7 @@
         <div id="list"></div>
         
         <div class="footer">
-            💾 数据已保存在浏览器本地 + GitHub
+            💾 数据已保存在浏览器本地 | <span id="sync-hint" style="cursor:pointer;text-decoration:underline;" onclick="toggleSettings()">点击设置 GitHub 同步</span>
         </div>
     </div>
     
@@ -322,6 +350,7 @@
             closeModal();
             renderList();
             updateStats();
+            autoSync();
         }
         
         function updateStatus(id, status) {
@@ -330,6 +359,7 @@
                 item.status = status;
                 localStorage.setItem('inspirations', JSON.stringify(inspirations));
                 updateStats();
+                autoSync();
             }
         }
         
@@ -339,6 +369,7 @@
                 localStorage.setItem('inspirations', JSON.stringify(inspirations));
                 renderList();
                 updateStats();
+                autoSync();
             }
         }
         
@@ -349,6 +380,93 @@
         
         function closeModal() {
             document.getElementById('modal').classList.remove('show');
+        }
+        
+        function toggleSettings() {
+            document.getElementById('settings').classList.toggle('show');
+        }
+        
+        function saveSettings() {
+            const token = document.getElementById('github-token').value.trim();
+            if (token) {
+                localStorage.setItem('github_token', token);
+                localStorage.setItem('github_owner', 'howardrock88');
+                localStorage.setItem('github_repo', 'inspiration-tracker');
+                localStorage.setItem('github_path', 'inspirations.json');
+                showSyncStatus('设置已保存！', 'success');
+            }
+        }
+        
+        function showSyncStatus(msg, type) {
+            const el = document.getElementById('sync-status');
+            el.className = 'sync-status ' + type;
+            el.textContent = msg;
+            setTimeout(() => el.className = 'sync-status', 3000);
+        }
+        
+        async function syncToGithub() {
+            const token = localStorage.getItem('github_token');
+            if (!token) {
+                showSyncStatus('请先在设置中输入 GitHub Token', 'error');
+                return;
+            }
+            
+            showSyncStatus('正在同步...', 'syncing');
+            
+            const owner = localStorage.getItem('github_owner');
+            const repo = localStorage.getItem('github_repo');
+            const path = localStorage.getItem('github_path');
+            
+            const content = JSON.stringify(inspirations, null, 2);
+            const encoded = btoa(unescape(encodeURIComponent(content)));
+            
+            try {
+                // Get current file SHA
+                const getUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+                let sha = null;
+                
+                try {
+                    const getResp = await fetch(getUrl, {
+                        headers: { 'Authorization': 'token ' + token }
+                    });
+                    if (getResp.ok) {
+                        const getData = await getResp.json();
+                        sha = getData.sha;
+                    }
+                } catch (e) {}
+                
+                // Update file
+                const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+                const body = {
+                    message: 'Update inspirations via web',
+                    content: encoded,
+                    ...(sha && { sha })
+                };
+                
+                const resp = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': 'token ' + token,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+                
+                if (resp.ok) {
+                    showSyncStatus('✅ 已同步到 GitHub！', 'success');
+                } else {
+                    const err = await resp.text();
+                    showSyncStatus('❌ 同步失败: ' + err, 'error');
+                }
+            } catch (e) {
+                showSyncStatus('❌ 同步失败: ' + e.message, 'error');
+            }
+        }
+        
+        function autoSync() {
+            if (localStorage.getItem('github_token')) {
+                syncToGithub();
+            }
         }
         
         init();
