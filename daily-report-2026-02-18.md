@@ -1,54 +1,62 @@
-## 📰 2026年2月18日 行业早报
+# 2026年2月18日 行业早报
 
 ---
 
 ### 🔥 今日焦点
 
-**春晚机器人"卖爆"：62万元机型被秒抢，订单量增长150%**
-2026年马年春晚落幕，机器人成为最大亮点。春晚开播两小时，京东机器人搜索量环比增长超300%，客服问询量增长460%，订单量增长150%。其中价值近63万元的GALBOT通用机器人G1瞬间被抢购一空。宇树科技、魔法原子、松延动力、银河通用四家机器人企业集体亮相春晚，标志着具身智能进入品牌影响力竞争阶段。
-来源: 新浪财经 | https://finance.sina.com.cn/jjxw/2026-02-17/doc-inhnceim6197711.shtml
+**印度AI峰会召开 全球科技巨头齐聚新德里**
+2月16日开幕的印度AI峰会吸引OpenAI、Anthropic、NVIDIA、Google、Microsoft高管出席，OpenAI CEO Sam Altman、Google DeepMind CEO Demis Hassabis、Anthropic CEO Dario Amodei将发表演讲。印度总理莫迪力图让印度在AI领域占据领导地位。
+来源: Reuters | https://www.reuters.com/business/retail-consumer/openai-google-india-hosts-global-ai-summit-2026-02-16/
+
+**央视春晚变"科技秀" 六家机器人品牌集中亮相**
+除夕夜春晚舞台上，宇树科技、银河通用、智元机器人等六家人形机器人企业登台。宇树G1和H2完成全球首次全自主人形机器人集群武术表演，Unitree G1售价超过20万元。
+来源: 36氪 | https://36kr.com/p/3688239515217796
+
+---
+
+### 💰 融资动态
+
+**Anthropic完成300亿美元G轮融资 估值3800亿美元**
+2月12日，Anthropic宣布完成300亿美元G轮融资，融资后估值达到3800亿美元。这是AI领域最大规模融资之一。
+来源: Wikipedia | https://en.wikipedia.org/wiki/Anthropic
+
+**Meta扩大NVIDIA芯片订单 2026年AI投资达1350亿美元**
+Meta宣布2026年AI投资预算最高1350亿美元，并与NVIDIA达成数十亿美元芯片协议，用于数据中心建设。
+来源: CNBC | https://www.cnbc.com/2026/02/17/meta-nvidia-deal-ai-data-center-chips.html
 
 ---
 
 ### 🤖 机器人进展
 
-**宇树科技计划2026年出货2万台人形机器人**
-央视春晚后，宇树科技CEO王兴兴表示，公司计划今年出货约2万台人形机器人，较2025年的5500台大幅增长。春晚期间，宇树G1与H2两款人形机器人与演员协同完成劈叉、械斗及空翻等高难度动作，展现了中国机器人技术的最新进展。
-来源: 南华早报 | https://www.scmp.com/tech/big-tech/article/3343825/kung-fu-somersaults-and-scale-unitree-eyes-20000-robot-output-2026-after-gala
+**人形机器人2026大爆发 304起融资379亿元**
+根据IT桔子数据，2025年具身智能领域融资超304起，总额379亿元，是2024年的4倍。宇树科技已完成IPO辅导冲刺A股"人形机器人第一股"，智元机器人通过收购获得上市平台。
+来源: 新浪财经 | https://finance.sina.com.cn/stock/t/2026-02-18/doc-inhnfaym8202102.shtml
 
-**中国人形机器人在春晚大放异彩，外媒惊叹"next level"**
-2026年马年春晚，四家中国机器人公司（宇树科技、魔法原子、松延动力、银河通用）的人形机器人进行了武术、舞蹈等多元化表演。路透社、CNN等外媒纷纷报道，称春晚已成为展示中国科技雄心的风向标。英国《每日邮报》惊呼：中国机器人功夫了得。
-来源: NBC News | https://www.nbcnews.com/world/asia/chinas-humanoid-robots-take-center-stage-lunar-new-year-showtime-rcna259307
-
-**人形机器人首次亮相春晚语言类节目**
-松延动力的人形机器人首次出现在春晚语言类小品《奶奶的最爱》中，两台"N2"机器人完成了侧手翻、空翻等高难度动作。松延动力CMO张淼表示，从确定要登上春晚到完成表演，仅用了两个多月时间，攻克了众多技术难关。
-来源: 新浪财经 | https://finance.sina.com.cn/jjxw/2026-02-17/doc-inhnckrf8995506.shtml
+**CES 2026：中国18家公司推出消费级AI机器人**
+18家中国公司在CES 2026上展示了陪伴教育机器人、情绪机器人等产品，涵盖仿生宠物、桌面小伙伴、飞行精灵等形态。
+来源: 36氪 | https://36kr.com/p/3630131383977225
 
 ---
 
-### 🌍 全球AI动态
+### 📊 行业数据
 
-**莫迪主持印度AI峰会，展示全球AI竞争雄心**
-印度AI影响力峰会于新德里举行第二天，印度总理莫迪出席并发表讲话，阐述印度在全球AI竞争中的战略定位。峰会聚焦AI赋能制造业、智慧城市、网络安全等议题，印度政府宣布多项AI产业扶持政策。
-来源: Bloomberg | https://www.bloomberg.com/news/articles/2026-02-17/modi-seizes-ai-summit-to-assert-india-s-global-ambitions-after-tough-year
-
-**AI驱动存储需求，美光科技有望实现大规模增长**
-分析师预测，由于AI训练需要大量数据存储，美光科技股价有望在2026年底达到1200美元。AI热潮推动存储器短缺问题，硬盘驱动器需求激增，部分分析师甚至认为蓝光烧录机可能重新问世。
-来源: National Today | https://nationaltoday.com/us/ny/new-york/news/2026/02/17/micron-poised-for-massive-growth-as-ai-boosts-memory-demand/
+**2026年全球AI芯片竞争加剧**
+NVIDIA在印度AI峰会上宣布多项合作，GB300 NVL72推理性能提升50倍，每百万token成本降低35倍。Meta、Microsoft、Google等巨头竞相抢购AI芯片。
+来源: NVIDIA @x.com | https://x.com/nvidia/status/2023918736881623505
 
 ---
 
-### 📱 科技要闻
+### 📱 大模型动态
 
-**春晚同款机器人售价20.88万元起，宇树科技回应缺货**
-宇树科技春晚同款机器人G1 EDU U2进阶版售价20.88万元起，官方客服表示目前已售罄。2025年宇树人形机器人出货量位列全球第一，公司表示2026年将继续引领全球具身智能产业。
-来源: 新浪财经 | https://finance.sina.com.cn/jjxw/2026-02-17/doc-inhncqwy4989930.shtml
+**Sam Altman祝贺Benchmark合伙人**
+Sam Altman在X上发文祝贺老友加入Benchmark，Thrive X基金规模超100亿美元。OpenAI持续推进与Anthropic、Google的竞争。
+来源: @sama | https://x.com/sama/status/2023839310764802349
 
-**四家机器人企业揭秘春晚幕后：百日奋战攻克技术难关**
-宇树科技、魔法原子、松延动力、银河通用四家企业揭秘春晚机器人表演幕后故事。银河通用凭借具身大模型攻克舞台难题，耗时近两个月反复排练；松延动力在仿生人脸结构中放入32个驱动电机，实现高度自然的表情变化。
-来源: 新浪财经 | https://finance.sina.com.cn/roll/2026-02-17/doc-inhnaxzk2045520.shtml
+**Grok 4.20数学推理能力超越GPT-5.2 Pro**
+用户测试显示，Grok 4.20在解决复杂数学问题仅需30秒，而GPT-5.2 Pro需要9分钟。Elon Musk转发称"AI必须获胜"。
+来源: @elonmusk | https://x.com/elonmusk/status/2024046968272453668
 
 ---
 
-*本期早报收录10条新闻，中文源5条（50%），英文源5条（50%）*
-*新闻发布日期：2026年2月17日*
+*新闻来源: Brave Search + RSS (103源) + X/Twitter*
+*发布日期: 2026年2月18日*
