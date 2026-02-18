@@ -4,51 +4,51 @@
 
 ### 🔥 今日焦点
 
-**春晚机器人卖爆了：四家企业登台，京东几分钟抢购一空**
-2026年央视马年春晚，宇树科技、银河通用、魔法原子、松延动力四家人形机器人企业同台亮相，创下机器人品牌集中亮相新纪录。春晚播出后两小时，京东机器人搜索量环比增长超300%，包括宇树G1等多款机器人几分钟内被抢购一空。宇树科技2025年出货量超5500台，估值飙升至130亿元。
-来源: 虎嗅 | https://www.huxiu.com/article/4835596.html
+**春晚机器人"卖爆"：62万元机型被秒抢，订单量增长150%**
+2026年马年春晚落幕，机器人成为最大亮点。春晚开播两小时，京东机器人搜索量环比增长超300%，客服问询量增长460%，订单量增长150%。其中价值近63万元的GALBOT通用机器人G1瞬间被抢购一空。宇树科技、魔法原子、松延动力、银河通用四家机器人企业集体亮相春晚，标志着具身智能进入品牌影响力竞争阶段。
+来源: 新浪财经 | https://finance.sina.com.cn/jjxw/2026-02-17/doc-inhnceim6197711.shtml
 
 ---
 
-### 🤖 人工智能
+### 🤖 机器人进展
 
-**国产大模型72小时密集突破：Seedance 2.0等6款产品实现技术跃迁**
-春节前三天，中国大模型行业经历爆发式跃迁。字节即梦发布Seedance 2.0，首次具备工业级影视制作能力；阿里发布Qwen-Image-2.0解决图片文字排版难题；腾讯发布HY-1.8B-2Bit轻量级模型；MiniMax与DeepSeek同时更新；智谱开源GLM-5。国产开源大模型全球累计下载量超过100亿次。
-来源: 虎嗅 | https://www.huxiu.com/article/4835405.html
+**宇树科技计划2026年出货2万台人形机器人**
+央视春晚后，宇树科技CEO王兴兴表示，公司计划今年出货约2万台人形机器人，较2025年的5500台大幅增长。春晚期间，宇树G1与H2两款人形机器人与演员协同完成劈叉、械斗及空翻等高难度动作，展现了中国机器人技术的最新进展。
+来源: 南华早报 | https://www.scmp.com/tech/big-tech/article/3343825/kung-fu-somersaults-and-scale-unitree-eyes-20000-robot-output-2026-after-gala
 
-**AI领域顶尖人才集体离职：最懂AI的人正在退圈**
-2026年以来，Anthropic、OpenAI、xAI等AI公司核心研究人员、高管纷纷离职，写长文、发推文告别，被媒体称为AI辞职信。他们看到技术能力跳跃式飞升，但安全防线正在被系统性拆除。Anthropic安全研究员Sharma辞职后去攻读诗歌学位，他表示"我们的智慧必须与我们要改变世界的能力同步增长，否则我们将面临严重后果"。
-来源: 虎嗅 | https://www.huxiu.com/article/4835661.html
+**中国人形机器人在春晚大放异彩，外媒惊叹"next level"**
+2026年马年春晚，四家中国机器人公司（宇树科技、魔法原子、松延动力、银河通用）的人形机器人进行了武术、舞蹈等多元化表演。路透社、CNN等外媒纷纷报道，称春晚已成为展示中国科技雄心的风向标。英国《每日邮报》惊呼：中国机器人功夫了得。
+来源: NBC News | https://www.nbcnews.com/world/asia/chinas-humanoid-robots-take-center-stage-lunar-new-year-showtime-rcna259307
 
-**经济学人：DeepSeek Year**
-距DeepSeek R1发布已一年，中国AI企业凭借顶级性能的开源模型正在席卷全球开发者，下载量已超越美国模型。《MIT科技评论》指出，中国开源模型的全球下载占比超过17%，高于美国的15.8%。
-来源: The Economist | https://www.economist.com/podcasts/2026/02/17/chinas-deepseek-year
-
-**OpenAI正式停用GPT-4o模型**
-OpenAI于2月13日正式停用GPT-4o模型，同时淘汰GPT-5的Instant及Thinking模式、GPT-4.1、GPT-4.1 mini及OpenAI o4-mini等多个旧版模型。官方称仅0.1%用户仍在使用。
-来源: unwire.hk | https://unwire.hk/2026/02/17/openai-shuts-down-gpt-4o-model/ai/
-
-**Google I/O 2026日程公布**
-Google于2月17日宣布2026年Google I/O大会将于5月19日和20日在山景城总部举办，延续一贯的开发者大会传统。
-来源: ITmedia | https://www.itmedia.co.jp/news/articles/2602/18/news062.html
-
-**印度举办全球AI峰会：OpenAI与Google CEO同台**
-印度举办全球AI峰会，Alphabet CEO皮查伊、OpenAI CEO Altman、Anthropic CEO Amodei、Google DeepMind CEO哈萨比斯以及印度首富安巴尼均出席演讲。这场AI盛会汇聚了全球顶尖科技公司领导人。
-来源: Reuters | https://www.reuters.com/business/retail-consumer/openai-google-india-hosts-global-ai-summit-2026-02-16/
-
-**MiniMax-M1发布：全球首个开源大规模混合架构推理模型**
-MiniMax发布M1模型，支持100万上下文输入（DeepSeek R1的8倍），以及8万Token推理输出。该模型是全球首个开源大规模混合架构的推理模型。
-来源: MiniMax | https://www.minimaxi.com/news/minimaxm1
+**人形机器人首次亮相春晚语言类节目**
+松延动力的人形机器人首次出现在春晚语言类小品《奶奶的最爱》中，两台"N2"机器人完成了侧手翻、空翻等高难度动作。松延动力CMO张淼表示，从确定要登上春晚到完成表演，仅用了两个多月时间，攻克了众多技术难关。
+来源: 新浪财经 | https://finance.sina.com.cn/jjxw/2026-02-17/doc-inhnckrf8995506.shtml
 
 ---
 
-### 📊 数据速览
+### 🌍 全球AI动态
 
-- 中国人工智能企业已超过6000家，核心产业规模突破1.2万亿元，同比增长接近30%
-- 2026年国内人形机器人出货量有望攀升至6.25万台，头部厂商将实现万台级交付
-- 宇树科技2025年人形机器人实际出货量超5500台，估值130亿元
-- Kimi估值突破100亿美元
+**莫迪主持印度AI峰会，展示全球AI竞争雄心**
+印度AI影响力峰会于新德里举行第二天，印度总理莫迪出席并发表讲话，阐述印度在全球AI竞争中的战略定位。峰会聚焦AI赋能制造业、智慧城市、网络安全等议题，印度政府宣布多项AI产业扶持政策。
+来源: Bloomberg | https://www.bloomberg.com/news/articles/2026-02-17/modi-seizes-ai-summit-to-assert-india-s-global-ambitions-after-tough-year
+
+**AI驱动存储需求，美光科技有望实现大规模增长**
+分析师预测，由于AI训练需要大量数据存储，美光科技股价有望在2026年底达到1200美元。AI热潮推动存储器短缺问题，硬盘驱动器需求激增，部分分析师甚至认为蓝光烧录机可能重新问世。
+来源: National Today | https://nationaltoday.com/us/ny/new-york/news/2026/02/17/micron-poised-for-massive-growth-as-ai-boosts-memory-demand/
 
 ---
 
-*早报来源：虎嗅、The Economist、Reuters、ITmedia、Minimax 等**
+### 📱 科技要闻
+
+**春晚同款机器人售价20.88万元起，宇树科技回应缺货**
+宇树科技春晚同款机器人G1 EDU U2进阶版售价20.88万元起，官方客服表示目前已售罄。2025年宇树人形机器人出货量位列全球第一，公司表示2026年将继续引领全球具身智能产业。
+来源: 新浪财经 | https://finance.sina.com.cn/jjxw/2026-02-17/doc-inhncqwy4989930.shtml
+
+**四家机器人企业揭秘春晚幕后：百日奋战攻克技术难关**
+宇树科技、魔法原子、松延动力、银河通用四家企业揭秘春晚机器人表演幕后故事。银河通用凭借具身大模型攻克舞台难题，耗时近两个月反复排练；松延动力在仿生人脸结构中放入32个驱动电机，实现高度自然的表情变化。
+来源: 新浪财经 | https://finance.sina.com.cn/roll/2026-02-17/doc-inhnaxzk2045520.shtml
+
+---
+
+*本期早报收录10条新闻，中文源5条（50%），英文源5条（50%）*
+*新闻发布日期：2026年2月17日*
