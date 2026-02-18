@@ -1,66 +1,57 @@
-## 📰 2026年2月18日 行业早报
+# 行业早报 2026年2月18日
+
+> 收录时间: 2026-02-18 | 数据来源: Brave搜索/RSS/Twitter
 
 ---
 
-### 🔥 今日焦点
+## 今日焦点
 
-**Anthropic完成300亿美元融资，刷新AI行业纪录**
-Anthropic宣布完成300亿美元Series G融资，这是2月以来AI行业最大规模融资。知情人士透露，本轮距离上一轮仅数月之隔，Anthropic正加速扩展其AI安全研究和Claude模型开发。此轮融资将进一步巩固Anthropic与OpenAI的竞争格局。
-来源: Tracxn | https://tracxn.com/d/companies/anthropic/__SzoxXDMin-NK5tKB7ks8yHr6S9Mz68pjVCzFEcGFZ08/funding-and-investors
+### 1. 中国人形机器人亮相2026央视春晚
+**简介**: 2026年央视春晚成为中国人形机器人技术的集中展示舞台，Unitree Robotics、MagicLab、Noetix Robotics、Galbot等多家企业同台竞技。MagicBot Z1完成了360度旋转"Thomas 360"高难度动作，Unitree的G1和H2机器人表演了武术动作包括马步、翻腾、双截棍和醉拳。Galbot展示了语音交互、叠衣服、取物等家务能力。**原文链接**: https://technode.com/2026/02/17/humanoid-robots-take-center-stage-at-2026-spring-festival-gala-revealing-chinas-latest-robotics-advances/ **发布日期**: 2026-02-17
 
-**Mistral AI收购Koyeb，构建欧洲主权AI云**
-法国AI公司Mistral AI宣布收购法国无服务器云创业公司Koyeb，旨在构建欧洲主权全栈AI云。此举标志着欧洲AI厂商推进本土AI基础设施建设的重大一步，减少对美国云服务的依赖。
-来源: Windows Forum | https://windowsforum.com/threads/mistral-ai-buys-koyeb-to-build-europes-sovereign-full-stack-ai-cloud.401511/
+### 2. 印度AI Impact Summit 2026进入第二天
+**简介**: 印度AI Impact峰会第二天，PM Modi主持开幕，超过600家初创企业和13个国家展馆参展。Sam Altman(Sam Altman)、Sundar Pichai、Demis Hassabis、Dario Amodei等全球AI巨头领导人出席。印度本土AI企业Sarvam AI和IIT Bombay主导的BharatGen计划发布其主权大语言模型。**原文链接**: https://indianexpress.com/article/technology/tech-news-technology/india-ai-impact-summit-2026-live-updates-major-announcements-key-speakers-10534350/ **发布日期**: 2026-02-17
 
----
-
-### 💰 融资动态
-
-**Temporal Technologies** - $300M (D轮)
-- 投资方: Andreessen Horowitz领投，Lightspeed Venture Partners、Sapphire Ventures跟投
-- 估值: $5B
-- 简介: AI agent可靠性平台，帮助企业实现AI代理的故障恢复和状态管理，OpenAI、Nordstrom等均为其客户
-来源: SiliconANGLE | https://siliconangle.com/2026/02/17/ai-agent-reliability-startup-temporal-raises-300m-funding/
-
-**Moonshot AI** - 寻求新融资
-- 目标估值: $10B
-- 简介: 中国AI大模型公司，2025年12月刚完成$500M C轮融资（估值$4.3B），投资者包括阿里、腾讯、IDG Capital
-来源: Caproasia | https://www.caproasia.com/2026/02/17/china-ai-startup-moonshot-ai-to-raise-new-funding-at-10-billion-valuation-raised-500-million-in-series-c-funding-at-4-3-billion-valuation-in-2025-december-founded-in-2023-by-yang-zhilin-investor/
-
-**2026年AI融资概况**: 截至目前，17家美国AI公司已融资超$100M
-来源: TechCrunch | https://techcrunch.com/2026/02/17/here-are-the-17-us-based-ai-companies-that-have-raised-100m-or-more-in-2026/
+### 3. Tesla Optimus机器人市场潜力预测
+**简介**: 市场分析师预测Tesla的Optimus人形机器人业务估值将超过汽车业务。ARK Invest的Cathie Wood表示，Optimus将在2028-2029年改变工厂和家庭生活。Tesla计划在2027年底面向公众发售Optimus，并将在2026年上半年在7个美国城市推出robotaxi服务。**原文链接**: https://www.mixvale.com.br/2026/02/17/teslas-bet-on-humanoid-robots-should-exceed-automotive-sector-revenues-in-the-coming-years-en/ **发布日期**: 2026-02-17
 
 ---
 
-### 🤖 机器人进展
+## 融资动态
 
-**中国春晚展示人形机器人技术实力**
-2026年春晚舞台上，中国展示了先进的人形机器人技术。根据Omdia研究，中国占全球去年约13,000台人形机器人出货量的90%，远超包括Tesla Optimus在内的美国竞争对手。分析师指出，人形机器人集合了中国的AI能力、硬件供应链和制造雄心，是最具"可读性"的公众认知形态。
-来源: The Independent | https://www.the-independent.com/asia/china/china-lunar-new-year-spring-festival-gala-b2921065.html
+### 4. OpenAI 2026年融资最新数据
+**简介**: 截至2026年2月17日，OpenAI累计融资达579亿美元，涉及9轮融资，包括7轮后期融资、1轮债务融资和1轮赠款。Amazon正在讨论向OpenAI投资高达500亿美元。**原文链接**: https://tracxn.com/d/companies/openai/__kElhSG7uVGeFk1i71Co9-nwFtmtyMVT7f-YHMn4TFBg/funding-and-investors **发布日期**: 2026-02-17
 
-**Tesla Optimus第三代或将于Q1 2026发布**
-Tesla工程师透露，最新财报中提及的第三代Optimus"为大规模生产而生"，预计将在2026年第一季度亮相。马斯克表示，Optimus将在明年开始改变生活，2028-2029年产生重大影响。他预计最大竞争对手将来自中国公司。
-来源: Longbridge | https://longbridge.com/en/news/276029556
+### 5. Latin American startup Kavak获3亿美元融资
+**简介**: 拉丁美洲二手车初创企业Kavak宣布完成3亿美元融资轮，由Andreessen Horowitz领投。**原文链接**: https://www.marketscreener.com/news/latin-american-used-car-startup-kavak-announces-300-mln-funding-round-led-by-andreessen-horowitz-ce7e5dd9d988f724 **发布日期**: 2026-02-17
 
 ---
 
-### 📊 行业数据
+## 机器人进展
 
-（今日无重大行业数据发布）
+### 6. SpaceX与xAI合作开发AI无人机蜂群技术
+**简介**: Elon Musk的SpaceX与其全资子公司xAI合作，参与美国国防部机密竞赛，开发先进语音控制自主无人机蜂群技术。**原文链接**: https://www.aeronewsjournal.com/2026/02/spacex-unleashes-ai-swarm-power-in.html **发布日期**: 2026-02-17
 
----
-
-### 📱 大模型动态
-
-- **OpenAI收购OpenClaw**: OpenAI宣布收购开源AI代理框架OpenClaw，这是一次"人才收购"，OpenClaw将继续保持开源和模型中立性，支持12+AI提供商
-  来源: Get AI Perks | https://www.getaiperks.com/en/blogs/26-openai-acquires-openclaw
-
-- **2026年2月AI模型排名更新**: GPT-5.2、Claude Opus 4.6、Gemini 3 Pro占据排名前列，Claude 5和Gemini 4预计将在年内推出
-  来源: Fello AI | https://felloai.com/best-ai-february-2026/
-
-- **2026年AI工作流新常态**: 业内形成"ChatGPT头脑风暴、Gemini压缩研究、Claude定稿结构"的新工作流程
-  来源: KM Journal | https://www.kmjournal.net/news/articleView.html?idxno=8582
+### 7. 人形机器人市场预测: 2030年达2000亿美元
+**简介**: FII Institute报告显示，人形机器人市场预计从目前的20-30亿美元增长到未来十年的2000亿美元，生产率提升可达150%。物理AI和人形机器人将成为下一个工业前沿。**原文链接**: https://fii-institute.org/publication/the-future-of-artificial-intelligence-physical-ai-and-humanoid-robotics-are-the-next-industrial-frontier **发布日期**: 2026-02-17
 
 ---
 
-*新闻来源: Brave Search API (90+ RSS源)*
+## 大模型动态
+
+### 8. Alibaba发布Qwen3.5
+**简介**: 阿里巴巴推出Qwen3.5，自称性能与OpenAI和Google DeepMind的领先模型相当，但基准测试数据为自报。**原文链接**: https://www.europeanbusinessreview.com/alibaba-rolls-out-qwen3-5-as-chinas-ai-race-shifts-toward-agents/ **发布日期**: 2026-02-17
+
+### 9. Microsoft AI基础设施投资达1000亿美元
+**简介**: 微软第二季度2026财年净利润385亿美元，其中76亿美元来自OpenAI重组为公益公司(PBC)的一次性收益。市场关注微软1000亿美元AI基础设施投资。**原文链接**: https://markets.financialcontent.com/stocks/article/finterra-2026-2-17-the-ai-reality-check-a-deep-dive-into-microsofts-100-billion-infrastructure-bet **发布日期**: 2026-02-17
+
+---
+
+## 行业数据
+
+### 10. Nvidia财报发布在即
+**简介**: Nvidia即将发布财报，这将是AI投资热潮的终极考验。Nasdaq指数2026年年初至今下跌约3%，反映投资者"AI疲劳"情绪。但行业人士表示计算需求仍然" off the charts"。**原文链接**: https://markets.financialcontent.com/stocks/article/marketminute-2026-2-17-nvidia-earnings-the-ultimate-test-for-the-ai-trade **发布日期**: 2026-02-17
+
+---
+
+*本早报由AI生成，仅供参考*
