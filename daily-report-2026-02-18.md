@@ -4,52 +4,51 @@
 
 ### 🔥 今日焦点
 
-**印度AI Impact Summit 2026开幕 全球科技巨头齐聚新德里**
-印度AI Impact Summit 2026于2月16日在新德里Bharat Mandapam开幕，PM Modi主持开幕仪式，OpenAI CEO Sam Altman、Google CEO Sundar Pichai等全球科技领袖参会。峰会聚焦AI赋能社会发展，吸引了超过600家初创企业参与，展示AI在医疗、教育等领域的应用。
-来源: Hindustan Times | https://www.hindustantimes.com/india-news/ai-impact-summit-delhi-2026-live-updates-day-2-ai-impact-summit-bharat-narendra-modi-ai-expo-macron-visit-february-17-101771289866087.html
+**春晚机器人卖爆了：四家企业登台，京东几分钟抢购一空**
+2026年央视马年春晚，宇树科技、银河通用、魔法原子、松延动力四家人形机器人企业同台亮相，创下机器人品牌集中亮相新纪录。春晚播出后两小时，京东机器人搜索量环比增长超300%，包括宇树G1等多款机器人几分钟内被抢购一空。宇树科技2025年出货量超5500台，估值飙升至130亿元。
+来源: 虎嗅 | https://www.huxiu.com/article/4835596.html
 
 ---
 
-### 💰 融资动态
+### 🤖 人工智能
 
-**Anthropic** - 300亿美元
-- 投资方: Coatue、GIC联合领投，阿布扎比MGX基金参投
-- 简介: AI安全研究公司Anthropic完成30亿美元G轮融资，估值达380亿美元，创AI领域融资纪录
-来源: Bloomberg | https://www.bloomberg.com/news/articles/2026-02-17/openai-anthropic-deals-power-abu-dhabi-s-100-billion-ai-bet
+**国产大模型72小时密集突破：Seedance 2.0等6款产品实现技术跃迁**
+春节前三天，中国大模型行业经历爆发式跃迁。字节即梦发布Seedance 2.0，首次具备工业级影视制作能力；阿里发布Qwen-Image-2.0解决图片文字排版难题；腾讯发布HY-1.8B-2Bit轻量级模型；MiniMax与DeepSeek同时更新；智谱开源GLM-5。国产开源大模型全球累计下载量超过100亿次。
+来源: 虎嗅 | https://www.huxiu.com/article/4835405.html
 
----
+**AI领域顶尖人才集体离职：最懂AI的人正在退圈**
+2026年以来，Anthropic、OpenAI、xAI等AI公司核心研究人员、高管纷纷离职，写长文、发推文告别，被媒体称为AI辞职信。他们看到技术能力跳跃式飞升，但安全防线正在被系统性拆除。Anthropic安全研究员Sharma辞职后去攻读诗歌学位，他表示"我们的智慧必须与我们要改变世界的能力同步增长，否则我们将面临严重后果"。
+来源: 虎嗅 | https://www.huxiu.com/article/4835661.html
 
-### 🤖 机器人进展
+**经济学人：DeepSeek Year**
+距DeepSeek R1发布已一年，中国AI企业凭借顶级性能的开源模型正在席卷全球开发者，下载量已超越美国模型。《MIT科技评论》指出，中国开源模型的全球下载占比超过17%，高于美国的15.8%。
+来源: The Economist | https://www.economist.com/podcasts/2026/02/17/chinas-deepseek-year
 
-**Qualcomm发布新一代机器人处理器Dragonwing IQ-10**
-Qualcomm在印度AI Impact Summit 2026上发布了Dragonwing IQ-10处理器，专为人形机器人和高级AMR设计。该处理器集成先进的AI推理能力，支持实时感知和决策，助力机器人在复杂环境中执行任务。
-来源: Indian Express | https://indianexpress.com/article/technology/tech-news-technology/india-ai-impact-summit-2026-live-updates-major-announcements-key-speakers-10534350/
+**OpenAI正式停用GPT-4o模型**
+OpenAI于2月13日正式停用GPT-4o模型，同时淘汰GPT-5的Instant及Thinking模式、GPT-4.1、GPT-4.1 mini及OpenAI o4-mini等多个旧版模型。官方称仅0.1%用户仍在使用。
+来源: unwire.hk | https://unwire.hk/2026/02/17/openai-shuts-down-gpt-4o-model/ai/
 
-**特斯拉Optimus机器人新进展**
-特斯拉CEO马斯克表示，特斯拉人形机器人Optimus预计将在未来几年超过汽车业务收入。Optimus直接受益于特斯拉车队积累的数十亿英里自动驾驶数据，FSD系统为其提供认知基础，使其能够处理非结构化人类和工厂环境。
-来源: Mix Vale | https://www.mixvale.com.br/2026/02/17/teslas-bet-on-humanoid-robots-should-exceed-automotive-sector-revenues-in-the-coming-years-en/
+**Google I/O 2026日程公布**
+Google于2月17日宣布2026年Google I/O大会将于5月19日和20日在山景城总部举办，延续一贯的开发者大会传统。
+来源: ITmedia | https://www.itmedia.co.jp/news/articles/2602/18/news062.html
 
----
+**印度举办全球AI峰会：OpenAI与Google CEO同台**
+印度举办全球AI峰会，Alphabet CEO皮查伊、OpenAI CEO Altman、Anthropic CEO Amodei、Google DeepMind CEO哈萨比斯以及印度首富安巴尼均出席演讲。这场AI盛会汇聚了全球顶尖科技公司领导人。
+来源: Reuters | https://www.reuters.com/business/retail-consumer/openai-google-india-hosts-global-ai-summit-2026-02-16/
 
-### 📊 行业数据
-
-**74%的AI气候 benefit声称缺乏可验证证据**
-气候公益组织Beyond Fossil Fuels和Climate Action Against Disinformation于2月17日发布的报告指出，74%的科技公司关于AI应对气候变化潜力的声称缺乏可验证证据。报告批评科技公司将传统AI与生成式AI混为一谈，误导公众。
-来源: TechBriefly | https://techbriefly.com/2026/02/17/report-finds-74-of-ai-climate-benefit-claims-lack-verifiable-evidence/
-
----
-
-### 📱 大模型动态
-
-- **Anthropic**: CEO Dario Amodei承认公司在平衡安全与商业化之间面临挑战，尽管预测2028年营收将达到700亿美元
-  来源: Fortune | https://fortune.com/2026/02/17/anthropic-ceo-dario-amodei-balancing-safety-commercial-pressure-ai-race-openai/
-
-- **阿里云**: 发布Qwen-3.5 AI模型，具备多模态能力和卓越性能
-  来源: OpenTools AI | https://opentools.ai/news
-
-- **xAI**: 2月1日发布Grok Imagine 1.0，音频质量显著提升
-  来源: Wikipedia | https://en.wikipedia.org/wiki/Grok_(chatbot)
+**MiniMax-M1发布：全球首个开源大规模混合架构推理模型**
+MiniMax发布M1模型，支持100万上下文输入（DeepSeek R1的8倍），以及8万Token推理输出。该模型是全球首个开源大规模混合架构的推理模型。
+来源: MiniMax | https://www.minimaxi.com/news/minimaxm1
 
 ---
 
-*新闻来源: Brave Search API (90+ RSS源)*
+### 📊 数据速览
+
+- 中国人工智能企业已超过6000家，核心产业规模突破1.2万亿元，同比增长接近30%
+- 2026年国内人形机器人出货量有望攀升至6.25万台，头部厂商将实现万台级交付
+- 宇树科技2025年人形机器人实际出货量超5500台，估值130亿元
+- Kimi估值突破100亿美元
+
+---
+
+*早报来源：虎嗅、The Economist、Reuters、ITmedia、Minimax 等**
