@@ -1,5 +1,55 @@
 [
   {
+    "id": "1771466710559",
+    "content": "2026 机器人行业开始大逃杀",
+    "platform": "微信",
+    "type": "文字",
+    "subject": "长文",
+    "status": "待创作",
+    "suggestions": {
+      "titles": [
+        "2026机器人行业大逃杀：谁在裸泳？",
+        "从狂热到理性：2026机器人行业生死局",
+        "机器人洗牌年：2026五大淘汰法则"
+      ],
+      "angles": [
+        "行业淘汰赛的具体表现：价格战、融资难、商业化困境",
+        "哪些企业会被淘汰？哪些能活下来？",
+        "行业从业者应该如何应对这场变局"
+      ],
+      "structure": [
+        "现象引入 → 行业现状 → 淘汰原因分析 → 未来趋势 → 应对建议",
+        "背景回顾 → 资本降温 → 商业化困境 → 格局重塑 → 生存法则"
+      ],
+      "platform": {
+        "length": "3000-5000字",
+        "style": "专业深度、数据支撑、逻辑清晰",
+        "structure": "开篇引入（热点事件/数据）→ 行业现状分析 → 淘汰逻辑拆解 → 趋势预测 → 从业者建议 → 结尾展望"
+      },
+      "referenceWorks": [
+        {
+          "title": "春晚机器人凉了？2026年，机器人要少跳舞，多干活",
+          "url": "https://36kr.com/p/3660192636166793",
+          "desc": "36氪深度分析2026年机器人行业从概念热潮走向商业化落地的转变",
+          "stats": "36氪"
+        },
+        {
+          "title": "人形机器人狂奔2026：谁为盛宴买单？",
+          "url": "https://finance.sina.com.cn/stock/t/2026-02-18/doc-inhnfaym8202102.shtml",
+          "desc": "新浪财经分析人形机器人从技术展示到商业化落地的战略迁移",
+          "stats": "新浪财经"
+        },
+        {
+          "title": "2026年中国机器人与具身智能市场十大趋势",
+          "url": "https://www.idc.com/resource-center/blog/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%AD%A3%E5%9C%A8%E8%BF%9B%E5%8C%96-2026%E5%B9%B4%E4%B8%AD%E5%9B%BD%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%B8%8E%E5%85%B7%E8%BA%AB%E6%99%BA/",
+          "desc": "IDC对中国机器人行业2026年发展趋势的十大预测",
+          "stats": "IDC"
+        }
+      ]
+    },
+    "createdAt": "2026/2/19 10:05:10"
+  },
+  {
     "id": "1770940404206",
     "content": "用openclaw创建一个多模型聚合入口",
     "platform": "小红书",
@@ -148,5 +198,50 @@
       ]
     },
     "createdAt": "2026/2/11 15:30:00"
+  },
+  {
+    "id": "1770798666162",
+    "content": "用 Openclaw 创建闪念胶囊",
+    "platform": "小红书",
+    "type": "文字",
+    "subject": "个人分享",
+    "status": "待创作",
+    "suggestions": {
+      "titles": [
+        "用 OpenClaw 打造我的闪念胶囊",
+        "告别遗忘！OpenClaw 闪念胶囊使用分享",
+        "OpenClaw 闪念胶囊：从想法到行动"
+      ],
+      "angles": [
+        "闪念胶囊是什么，为什么需要",
+        "OpenClaw 功能介绍和使用场景",
+        "如何高效收集和整理灵感",
+        "实际使用体验和效果"
+      ],
+      "structure": [
+        "问题 → 分析 → 解决",
+        "背景 → 内容 → 案例"
+      ],
+      "platform": {
+        "length": "300-500字",
+        "style": "轻松活泼、emoji丰富",
+        "structure": "开头钩子 → 干货 → 结尾互动"
+      },
+      "referenceWorks": [
+        {
+          "title": "闪念胶囊产品分析",
+          "url": "https://baike.baidu.com/item/闪念胶囊",
+          "desc": "了解闪念胶囊的产品形态",
+          "stats": "百科"
+        },
+        {
+          "title": "小红书爆款笔记攻略",
+          "url": "https://www.xiaohongshu.com/explore",
+          "desc": "学习高赞笔记的标题和封面技巧",
+          "stats": "热门"
+        }
+      ]
+    },
+    "createdAt": "2026/2/11 16:31:06"
   }
 ]
