@@ -1,5 +1,15 @@
 [
   {
+    "id": "1771466710559",
+    "content": "2026 机器人行业开始大逃杀",
+    "platform": "微信",
+    "type": "文字",
+    "subject": "长文",
+    "status": "待创作",
+    "suggestions": null,
+    "createdAt": "2026/2/19 10:05:10"
+  },
+  {
     "id": "1770940404206",
     "content": "用openclaw创建一个多模型聚合入口",
     "platform": "小红书",
@@ -148,5 +158,50 @@
       ]
     },
     "createdAt": "2026/2/11 15:30:00"
+  },
+  {
+    "id": "1770798666162",
+    "content": "用 Openclaw 创建闪念胶囊",
+    "platform": "小红书",
+    "type": "文字",
+    "subject": "个人分享",
+    "status": "待创作",
+    "suggestions": {
+      "titles": [
+        "用 OpenClaw 打造我的闪念胶囊",
+        "告别遗忘！OpenClaw 闪念胶囊使用分享",
+        "OpenClaw 闪念胶囊：从想法到行动"
+      ],
+      "angles": [
+        "闪念胶囊是什么，为什么需要",
+        "OpenClaw 功能介绍和使用场景",
+        "如何高效收集和整理灵感",
+        "实际使用体验和效果"
+      ],
+      "structure": [
+        "问题 → 分析 → 解决",
+        "背景 → 内容 → 案例"
+      ],
+      "platform": {
+        "length": "300-500字",
+        "style": "轻松活泼、emoji丰富",
+        "structure": "开头钩子 → 干货 → 结尾互动"
+      },
+      "referenceWorks": [
+        {
+          "title": "闪念胶囊产品分析",
+          "url": "https://baike.baidu.com/item/闪念胶囊",
+          "desc": "了解闪念胶囊的产品形态",
+          "stats": "百科"
+        },
+        {
+          "title": "小红书爆款笔记攻略",
+          "url": "https://www.xiaohongshu.com/explore",
+          "desc": "学习高赞笔记的标题和封面技巧",
+          "stats": "热门"
+        }
+      ]
+    },
+    "createdAt": "2026/2/11 16:31:06"
   }
 ]
