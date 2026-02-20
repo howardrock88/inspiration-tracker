@@ -197,11 +197,11 @@
         // GitHub API
         async function loadInspirations() {
             try {
-                const url = `https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}?t=${Date.now()}`;
+                const url = `https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}`;
                 const response = await fetch(url);
                 if (!response.ok) throw new Error('Failed to load');
                 const data = await response.json();
-                const content = new TextDecoder("utf-8").decode(Uint8Array.from(atob(data.content), c => c.charCodeAt(0));
+                const content = atob(data.content);
                 inspirations = JSON.parse(content);
                 render();
                 showStatus(`已加载 ${inspirations.length} 条灵感`, 'success');
@@ -225,7 +225,7 @@
             
             try {
                 // Get current file SHA
-                const url = `https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}?t=${Date.now()}`;
+                const url = `https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}`;
                 const getRes = await fetch(url);
                 const fileData = await getRes.json();
                 const sha = fileData.sha;
