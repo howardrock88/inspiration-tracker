@@ -3,511 +3,403 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💡 灵感库 - 创作灵感管理</title>
+    <title>💡 灵感库 v3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 24px 16px; }
-        .container { max-width: 600px; margin: 0 auto; }
-        h1 { text-align: center; font-size: 26px; color: #fff; margin-bottom: 8px; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-        .subtitle { text-align: center; color: rgba(255,255,255,0.9); margin-bottom: 28px; font-size: 14px; }
-        
-        .stats { display: flex; gap: 12px; margin-bottom: 20px; }
-        .stat-card { flex: 1; background: rgba(255,255,255,0.95); border-radius: 12px; padding: 16px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .stat-num { font-size: 28px; font-weight: 700; color: #1a202c; }
-        .stat-label { font-size: 13px; color: #718096; margin-top: 4px; }
-        
-        .add-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: #fff; border: none; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(245,87,108,0.4); margin-bottom: 20px; transition: transform 0.2s; }
-        .add-btn:hover { transform: translateY(-2px); }
-        
-        .search-box { background: rgba(255,255,255,0.95); border-radius: 12px; padding: 16px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .search-input { width: 100%; padding: 12px 16px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px; outline: none; }
-        .search-input:focus { border-color: #667eea; }
-        
-        .filter-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-        .filter-row select { padding: 6px 12px; border: 1px solid #e2e8f0; border-radius: 20px; font-size: 13px; background: #fff; outline: none; cursor: pointer; }
-        
-        .card { background: #fff; border-radius: 16px; margin-bottom: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        .card-header { padding: 16px 20px; border-bottom: 1px solid #f0f0f0; }
-        
-        .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-        .tag { font-size: 12px; padding: 4px 12px; border-radius: 20px; font-weight: 600; }
-        .tag-platform { background: linear-gradient(135deg, #f093fb, #f5576c); color: #fff; }
-        .tag-type { background: linear-gradient(135deg, #4facfe, #00f2fe); color: #fff; }
-        .tag-subject { background: linear-gradient(135deg, #a18cd1, #fbc2eb); color: #fff; }
-        .tag-status { background: #e2e8f0; color: #4a5568; }
-        .tag-status.pending { background: #fed7aa; color: #c05621; }
-        .tag-status.doing { background: #bee3f8, #2b6cb0; color: #2b6cb0; }
-        .tag-status.done { background: #c6f6d5; color: #276749; }
-        
-        .content { padding: 0 20px 16px; font-size: 15px; color: #2d3748; line-height: 1.6; }
-        
-        .suggestions { margin: 0 20px 16px; background: linear-gradient(135deg, #f5f7ff 0%, #fae8ff 100%); border-radius: 12px; padding: 16px; }
-        .suggestions-title { font-size: 14px; font-weight: 600; color: #667eea; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-        .suggestion-item { font-size: 14px; color: #4a5568; padding: 6px 0; display: flex; align-items: flex-start; gap: 8px; }
-        .suggestion-bullet { color: #f5576c; font-weight: bold; }
-        
-        .card-footer { padding: 12px 20px; background: #f7fafc; display: flex; justify-content: space-between; align-items: center; }
-        .date { font-size: 12px; color: #a0aec0; }
-        .actions { display: flex; gap: 8px; }
-        .action-btn { padding: 6px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 12px; background: #fff; cursor: pointer; transition: all 0.2s; }
-        .action-btn:hover { background: #f7fafc; }
-        .action-btn.delete { color: #e53e3e; border-color: #feb2b2; }
-        .action-btn.delete:hover { background: #fff5f5; }
-        
-        .status-select { padding: 6px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 12px; background: #fff; outline: none; cursor: pointer; }
-        
-        .empty { text-align: center; padding: 40px; color: rgba(255,255,255,0.8); }
-        .empty-icon { font-size: 48px; margin-bottom: 12px; }
-        
-        /* Modal */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
-        .modal-overlay.show { display: flex; }
-        .modal { background: #fff; border-radius: 16px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; }
-        .modal-header { padding: 20px; border-bottom: 1px solid #e2e8f0; }
-        .modal-title { font-size: 18px; font-weight: 700; color: #1a202c; }
-        .modal-body { padding: 20px; }
-        .form-group { margin-bottom: 16px; }
-        .form-label { display: block; font-size: 14px; font-weight: 500; color: #4a5568; margin-bottom: 6px; }
-        .form-input, .form-select, .form-textarea { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px; outline: none; }
-        .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: #667eea; }
-        .form-textarea { resize: vertical; min-height: 80px; }
-        .form-row { display: flex; gap: 12px; }
-        .form-row .form-group { flex: 1; }
-        .modal-footer { padding: 16px 20px; border-top: 1px solid #e2e8f0; display: flex; gap: 12px; }
-        .modal-btn { flex: 1; padding: 12px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-        .modal-btn.cancel { background: #fff; border: 1px solid #e2e8f0; color: #4a5568; }
-        .modal-btn.cancel:hover { background: #f7fafc; }
-        .modal-btn.submit { background: linear-gradient(135deg, #667eea, #764ba2); border: none; color: #fff; }
-        .modal-btn.submit:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(102,126,234,0.4); }
-        
-        .footer { text-align: center; padding: 20px; color: rgba(255,255,255,0.7); font-size: 13px; }
-        
-        .sync-status { padding: 8px 16px; border-radius: 8px; font-size: 13px; margin-bottom: 16px; display: none; }
-        .sync-status.success { background: #c6f6d5; color: #276749; display: block; }
-        .sync-status.error { background: #fed7d7; color: #c53030; display: block; }
-        .sync-status.syncing { background: #bee3f8; color: #2b6cb0; display: block; }
-        
-        .settings-btn { position: fixed; top: 20px; right: 20px; background: rgba(255,255,255,0.9); border: none; padding: 12px 16px; border-radius: 12px; cursor: pointer; font-size: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-        .settings-panel { position: fixed; top: 0; right: -300px; width: 280px; height: 100%; background: #fff; box-shadow: -4px 0 20px rgba(0,0,0,0.2); padding: 20px; transition: right 0.3s; z-index: 200; }
-        .settings-panel.show { right: 0; }
-        .settings-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
-        .settings-close { float: right; cursor: pointer; font-size: 20px; }
-        
-        /* 折叠卡片样式 */
-        .day-card { background: #fff; border-radius: 16px; margin-bottom: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); cursor: pointer; transition: all 0.3s; }
-        .day-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
-        .day-card-header { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
-        .day-card-date { font-size: 16px; font-weight: 600; color: #1a202c; }
-        .day-card-arrow { font-size: 14px; color: #a0aec0; transition: transform 0.3s; }
-        .day-card.expanded .day-card-arrow { transform: rotate(180deg); }
-        
-        .day-card-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background: #fff; }
-        .day-card.expanded .day-card-content { max-height: 2000px; }
-        
-        .mini-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 16px; margin: 0 16px 16px; color: #fff; }
-        .mini-card-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; }
-        .mini-card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-        .mini-card-tag { font-size: 11px; padding: 3px 10px; background: rgba(255,255,255,0.2); border-radius: 20px; }
-        
-        .card-footer { padding: 12px 20px; background: #f7fafc; display: flex; justify-content: space-between; align-items: center; }
-        .date { font-size: 12px; color: #a0aec0; }
-        .actions { display: flex; gap: 8px; }
-        .action-btn { padding: 6px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 12px; background: #fff; cursor: pointer; transition: all 0.2s; }
-        .action-btn:hover { background: #f7fafc; }
-        .action-btn.delete { color: #e53e3e; border-color: #feb2b2; }
-        .action-btn.delete:hover { background: #fff5f5; }
-        
-        .status-select { padding: 6px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 12px; background: #fff; outline: none; cursor: pointer; }
+        * { font-family: 'Noto Sans SC', sans-serif; }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        .inspiration-card {
+            transition: all 0.3s;
+        }
+        .inspiration-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        .modal {
+            backdrop-filter: blur(5px);
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .syncing {
+            animation: pulse 1s infinite;
+        }
     </style>
 </head>
-<body>
-    <div class="container">
-        <button class="settings-btn" onclick="toggleSettings()">⚙️</button>
-        
-        <div class="settings-panel" id="settings">
-            <span class="settings-close" onclick="toggleSettings()">×</span>
-            <div class="settings-title">⚙️ 设置</div>
-            <div class="form-group">
-                <label class="form-label">GitHub Token</label>
-                <input type="password" class="form-input" id="github-token" placeholder="输入 GitHub Personal Access Token">
-                <p style="font-size:12px;color:#718096;margin-top:6px;">需要 repo 权限，Token 存储在浏览器本地</p>
+<body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="glass p-6 mb-6 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">
+                    💡 灵感库 v3
+                </h1>
+                <p class="text-gray-500 text-sm mt-1">自动同步 · 实时更新</p>
             </div>
-            <button class="modal-btn submit" onclick="saveSettings()">保存设置</button>
-            <hr style="margin:20px 0;">
-            <button class="modal-btn submit" style="background:#48bb78;" onclick="syncToGithub()">🔄 立即同步到 GitHub</button>
-        </div>
-        
-        <div class="sync-status" id="sync-status"></div>
-        
-        <h1>💡 灵感库 <span style="font-size:16px;cursor:pointer;" onclick="toggleSettings()">⚙️</span></h1>
-        <p class="subtitle">记录创作灵感，AI 辅助创作建议</p>
-        
-        <div class="stats">
-            <div class="stat-card">
-                <div class="stat-num" id="stat-total">0</div>
-                <div class="stat-label">总灵感</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-num" id="stat-pending" style="color: #ed8936;">0</div>
-                <div class="stat-label">待创作</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-num" id="stat-done" style="color: #48bb78;">0</div>
-                <div class="stat-label">已发布</div>
+            <div class="flex gap-3">
+                <button onclick="syncNow()" class="px-4 py-2 bg-gray-100 rounded-xl hover:bg-gray-200 transition flex items-center gap-2">
+                    <span id="syncIcon">🔄</span> 同步
+                </button>
+                <button onclick="openModal()" class="btn-primary px-6 py-2 rounded-xl text-white font-medium">
+                    + 添加灵感
+                </button>
             </div>
         </div>
         
-        <button class="add-btn" onclick="openModal()">
-            <span>➕</span> 添加灵感
-        </button>
+        <!-- Status Bar -->
+        <div id="statusBar" class="glass p-3 mb-4 text-sm text-gray-500 flex items-center gap-2">
+            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+            <span id="statusText">就绪</span>
+            <span class="ml-auto">自动刷新: <span id="countdown">30</span>s</span>
+        </div>
         
-        <button class="add-btn" style="background: linear-gradient(135deg, #48bb78, #38a169);" onclick="syncToGithub()">
-            <span>🔄</span> 同步到 GitHub
-        </button>
-        
-        <div class="search-box">
-            <input type="text" class="search-input" id="search" placeholder="🔍 搜索灵感..." oninput="renderList()">
-            <div class="filter-row">
-                <select onchange="updateFilter('platform', this.value)">
+        <!-- Filters -->
+        <div class="glass p-4 mb-6">
+            <div class="flex flex-wrap gap-2">
+                <select id="platformFilter" onchange="render()" class="px-3 py-2 bg-gray-100 rounded-lg">
                     <option value="">全部平台</option>
-                    <option value="小红书">小红书</option>
                     <option value="微信">微信</option>
-                    <option value="微博">微博</option>
-                    <option value="即刻">即刻</option>
+                    <option value="小红书">小红书</option>
+                    <option value="抖音">抖音</option>
                     <option value="B站">B站</option>
-                    <option value="其他">其他</option>
                 </select>
-                <select onchange="updateFilter('type', this.value)">
+                <select id="typeFilter" onchange="render()" class="px-3 py-2 bg-gray-100 rounded-lg">
                     <option value="">全部类型</option>
                     <option value="文字">文字</option>
                     <option value="视频">视频</option>
                 </select>
-                <select onchange="updateFilter('subject', this.value)">
-                    <option value="">全部题材</option>
-                    <option value="资讯">资讯</option>
-                    <option value="测评">测评</option>
-                    <option value="长文">长文</option>
-                    <option value="个人分享">个人分享</option>
-                </select>
-                <select onchange="updateFilter('status', this.value)">
+                <select id="statusFilter" onchange="render()" class="px-3 py-2 bg-gray-100 rounded-lg">
                     <option value="">全部状态</option>
                     <option value="待创作">待创作</option>
-                    <option value="进行中">进行中</option>
-                    <option value="已发布">已发布</option>
-                    <option value="归档">归档</option>
+                    <option value="创作中">创作中</option>
+                    <option value="已完成">已完成</option>
                 </select>
             </div>
         </div>
         
-        <div id="list"></div>
-        
-        <div class="footer">
-            💾 数据已保存在浏览器本地 | <span id="sync-hint" style="cursor:pointer;text-decoration:underline;" onclick="toggleSettings()">⚙️ 设置 GitHub 同步</span>
-        </div>
+        <!-- Inspirations List -->
+        <div id="inspirationsList" class="space-y-4"></div>
     </div>
     
     <!-- Modal -->
-    <div class="modal-overlay" id="modal">
-        <div class="modal">
-            <div class="modal-header">
-                <div class="modal-title">添加新灵感</div>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label">灵感内容</label>
-                    <textarea class="form-textarea" id="new-content" placeholder="描述你的创作灵感..."></textarea>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">平台</label>
-                        <select class="form-select" id="new-platform">
-                            <option value="小红书">小红书</option>
-                            <option value="微信">微信</option>
-                            <option value="微博">微博</option>
-                            <option value="即刻">即刻</option>
-                            <option value="B站">B站</option>
-                            <option value="其他">其他</option>
-                        </select>
+    <div id="modal" class="fixed inset-0 bg-black/50 modal hidden items-center justify-center p-4">
+        <div class="glass p-6 w-full max-w-lg">
+            <h2 class="text-xl font-bold mb-4">添加新灵感</h2>
+            <form id="inspirationForm" onsubmit="saveInspiration(event)">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">灵感内容</label>
+                        <textarea id="content" required class="w-full p-3 bg-gray-100 rounded-xl" rows="3" placeholder="写下你的灵感..."></textarea>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">类型</label>
-                        <select class="form-select" id="new-type">
-                            <option value="文字">文字</option>
-                            <option value="视频">视频</option>
-                        </select>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">平台</label>
+                            <select id="platform" class="w-full p-3 bg-gray-100 rounded-xl">
+                                <option value="微信">微信</option>
+                                <option value="小红书">小红书</option>
+                                <option value="抖音">抖音</option>
+                                <option value="B站">B站</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">类型</label>
+                            <select id="type" class="w-full p-3 bg-gray-100 rounded-xl">
+                                <option value="文字">文字</option>
+                                <option value="视频">视频</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">题材</label>
-                        <select class="form-select" id="new-subject">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">主题</label>
+                        <select id="subject" class="w-full p-3 bg-gray-100 rounded-xl">
                             <option value="资讯">资讯</option>
                             <option value="测评">测评</option>
-                            <option value="长文">长文</option>
+                            <option value="教程">教程</option>
                             <option value="个人分享">个人分享</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">状态</label>
-                        <select class="form-select" id="new-status">
-                            <option value="待创作">待创作</option>
-                            <option value="进行中">进行中</option>
-                            <option value="已发布">已发布</option>
-                            <option value="归档">归档</option>
+                            <option value="长文">长文</option>
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="modal-btn cancel" onclick="closeModal()">取消</button>
-                <button class="modal-btn submit" onclick="addInspiration()">保存</button>
-            </div>
+                <div class="flex gap-3 mt-6">
+                    <button type="button" onclick="closeModal()" class="flex-1 px-4 py-3 bg-gray-100 rounded-xl hover:bg-gray-200">取消</button>
+                    <button type="submit" class="flex-1 btn-primary px-4 py-3 rounded-xl text-white font-medium">保存并同步</button>
+                </div>
+            </form>
         </div>
     </div>
     
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="fixed inset-0 bg-black/50 modal hidden items-center justify-center p-4">
+        <div class="glass p-6 w-full max-w-md">
+            <h2 class="text-xl font-bold mb-4">⚙️ 设置</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">GitHub Token</label>
+                    <input type="password" id="githubToken" class="w-full p-3 bg-gray-100 rounded-xl" placeholder="ghp_xxxx">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">GitHub Owner</label>
+                    <input type="text" id="githubOwner" class="w-full p-3 bg-gray-100 rounded-xl" placeholder="your-username">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">GitHub Repo</label>
+                    <input type="text" id="githubRepo" class="w-full p-3 bg-gray-100 rounded-xl" placeholder="inspiration-tracker">
+                </div>
+                <button onclick="saveSettings()" class="w-full btn-primary px-4 py-3 rounded-xl text-white font-medium">保存设置</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        let inspirations = JSON.parse(localStorage.getItem('inspirations') || '[]');
-        let filters = { platform: '', type: '', subject: '', status: '' };
-        
-        const suggestionTemplates = {
-            小红书: {
-                文字: { 资讯: ['「XX领域最新消息，3分钟看懂」', '「揭秘：XX背后的真相」', '「2024年XX趋势，不看后悔」'], 测评: ['「XX天使用感受｜真实测评」', '「XX到底值不值？买前必看」'], 长文: ['「一篇讲透XX，建议收藏」', '「深度｜XX的全方位解读」'], 个人分享: ['「普通人XX的真实经历」', '「XX1年，我后悔没早点知道」'] },
-                视频: { 资讯: ['「60秒XX快讯」'], 测评: ['「XX开箱/测评视频」'], 长文: ['「XX深度vlog」'], 个人分享: ['「我的XX日常volg」'] }
-            },
-            微信: {
-                文字: { 资讯: ['「XX解读：一场行业变革」', '「重磅｜XX最新消息」'], 测评: ['「深度测评｜XX到底好不好」'], 长文: ['「万字长文｜XX深度解析」'], 个人分享: ['「我的XX故事」'] },
-                视频: { 资讯: ['「XX视频新闻」'], 测评: ['「XX视频测评」'], 长文: ['「XX深度访谈/纪录片」'], 个人分享: ['「XX人物专访」'] }
-            },
-            其他: {
-                文字: { 资讯: ['「XX快讯」'], 测评: ['「XX测评」'], 长文: ['「XX深度好文」'], 个人分享: ['「我的XX」'] },
-                视频: { 资讯: ['「XX视频快讯」'], 测评: ['「XX视频测评」'], 长文: ['「XX深度视频」'], 个人分享: ['「XX vlog」'] }
-            }
+        // Config
+        const GITHUB = {
+            owner: localStorage.getItem('github_owner') || 'howardrock88',
+            repo: localStorage.getItem('github_repo') || 'inspiration-tracker',
+            path: 'inspirations.json'
         };
         
-        function generateSuggestions(platform, type, subject) {
-            const p = suggestionTemplates[platform] || suggestionTemplates['其他'];
-            const t = p[type] || p['文字'];
-            return t[subject] || t['个人分享'];
+        let inspirations = [];
+        let countdown = 30;
+        let countdownInterval;
+        
+        // Init
+        async function init() {
+            loadSettings();
+            await loadInspirations();
+            startAutoRefresh();
         }
         
-        function init() {
-            renderList();
-            updateStats();
+        function loadSettings() {
+            if (!localStorage.getItem('github_token')) {
+                showStatus('请先设置 GitHub Token', 'warning');
+            }
         }
         
-        function updateFilter(key, value) {
-            filters[key] = value;
-            renderList();
+        // GitHub API
+        async function loadInspirations() {
+            try {
+                const url = `https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}`;
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Failed to load');
+                const data = await response.json();
+                const content = atob(data.content);
+                inspirations = JSON.parse(content);
+                render();
+                showStatus(`已加载 ${inspirations.length} 条灵感`, 'success');
+            } catch (e) {
+                console.error(e);
+                showStatus('加载失败，使用本地缓存', 'error');
+                inspirations = JSON.parse(localStorage.getItem('inspirations') || '[]');
+                render();
+            }
         }
         
-        function renderList() {
-            const search = document.getElementById('search').value.toLowerCase();
-            const list = document.getElementById('list');
+        async function saveToGitHub() {
+            const token = localStorage.getItem('github_token');
+            if (!token) {
+                alert('请先设置 GitHub Token');
+                openSettings();
+                return false;
+            }
             
-            const filtered = inspirations.filter(item => {
-                const matchesSearch = item.content.toLowerCase().includes(search);
-                const matchesPlatform = !filters.platform || item.platform === filters.platform;
-                const matchesType = !filters.type || item.type === filters.type;
-                const matchesSubject = !filters.subject || item.subject === filters.subject;
-                const matchesStatus = !filters.status || item.status === filters.status;
-                return matchesSearch && matchesPlatform && matchesType && matchesSubject && matchesStatus;
+            showStatus('正在同步到 GitHub...', 'syncing');
+            
+            try {
+                // Get current file SHA
+                const url = `https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}`;
+                const getRes = await fetch(url);
+                const fileData = await getRes.json();
+                const sha = fileData.sha;
+                
+                // Update file
+                const content = JSON.stringify(inspirations, null, 2);
+                const encoded = btoa(unescape(encodeURIComponent(content)));
+                
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: 'Update inspirations',
+                        content: encoded,
+                        sha: sha
+                    })
+                });
+                
+                if (!response.ok) throw new Error('Sync failed');
+                showStatus('同步成功!', 'success');
+                return true;
+            } catch (e) {
+                console.error(e);
+                showStatus('同步失败: ' + e.message, 'error');
+                return false;
+            }
+        }
+        
+        // UI Functions
+        function openModal() {
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('modal').classList.add('flex');
+            document.getElementById('content').focus();
+        }
+        
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+            document.getElementById('modal').classList.remove('flex');
+        }
+        
+        function openSettings() {
+            document.getElementById('settingsModal').classList.remove('hidden');
+            document.getElementById('settingsModal').classList.add('flex');
+            document.getElementById('githubToken').value = localStorage.getItem('github_token') || '';
+            document.getElementById('githubOwner').value = localStorage.getItem('github_owner') || GITHUB.owner;
+            document.getElementById('githubRepo').value = localStorage.getItem('github_repo') || GITHUB.repo;
+        }
+        
+        function saveSettings() {
+            localStorage.setItem('github_token', document.getElementById('githubToken').value);
+            localStorage.setItem('github_owner', document.getElementById('githubOwner').value);
+            localStorage.setItem('github_repo', document.getElementById('githubRepo').value);
+            document.getElementById('settingsModal').classList.add('hidden');
+            document.getElementById('settingsModal').classList.remove('flex');
+            showStatus('设置已保存', 'success');
+        }
+        
+        async function saveInspiration(e) {
+            e.preventDefault();
+            
+            const newInspiration = {
+                id: Date.now().toString(),
+                content: document.getElementById('content').value,
+                platform: document.getElementById('platform').value,
+                type: document.getElementById('type').value,
+                subject: document.getElementById('subject').value,
+                status: '待创作',
+                createdAt: new Date().toLocaleString('zh-CN')
+            };
+            
+            inspirations.unshift(newInspiration);
+            
+            const success = await saveToGitHub();
+            if (success) {
+                closeModal();
+                document.getElementById('inspirationForm').reset();
+                // Trigger webhook to notify OpenClaw
+                notifyOpenClaw();
+            }
+        }
+        
+        function notifyOpenClaw() {
+            // Call OpenClaw webhook to trigger suggestion generation
+            fetch('http://localhost:18789/v1/cron/jobs/490f8737-40fc-46b3-94af-0a5ffe329d16/run', {
+                method: 'POST'
+            }).catch(e => console.log('OpenClaw notification sent'));
+        }
+        
+        async function syncNow() {
+            const icon = document.getElementById('syncIcon');
+            icon.classList.add('syncing');
+            await loadInspirations();
+            icon.classList.remove('syncing');
+        }
+        
+        function startAutoRefresh() {
+            countdownInterval = setInterval(() => {
+                countdown--;
+                document.getElementById('countdown').textContent = countdown;
+                if (countdown <= 0) {
+                    countdown = 30;
+                    loadInspirations();
+                }
+            }, 1000);
+        }
+        
+        function render() {
+            const platform = document.getElementById('platformFilter').value;
+            const type = document.getElementById('typeFilter').value;
+            const status = document.getElementById('statusFilter').value;
+            
+            const filtered = inspirations.filter(i => {
+                if (platform && i.platform !== platform) return false;
+                if (type && i.type !== type) return false;
+                if (status && i.status !== status) return false;
+                return true;
             });
             
+            const list = document.getElementById('inspirationsList');
             if (filtered.length === 0) {
-                list.innerHTML = '<div class="empty"><div class="empty-icon">💡</div><p>还没有灵感，开始记录你的第一个想法吧！</p></div>';
+                list.innerHTML = '<div class="glass p-8 text-center text-gray-500">暂无灵感，点击右上角添加</div>';
                 return;
             }
             
-            list.innerHTML = filtered.map(item => `
-                <div class="day-card" onclick="toggleCard(this)">
-                    <div class="day-card-header">
-                        <span class="day-card-date">${item.content.substring(0, 30)}${item.content.length > 30 ? '...' : ''}</span>
-                        <span class="day-card-arrow">▼</span>
+            list.innerHTML = filtered.map(i => `
+                <div class="glass p-5 inspiration-card">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm">${i.platform}</span>
+                        <span class="px-3 py-1 bg-${getStatusColor(i.status)}-100 text-${getStatusColor(i.status)}-600 rounded-full text-sm">${i.status}</span>
                     </div>
-                    <div class="mini-card">
-                        <div class="mini-card-tags">
-                            <span class="mini-card-tag">${item.platform}</span>
-                            <span class="mini-card-tag">${item.type}</span>
-                            <span class="mini-card-tag">${item.subject}</span>
-                            <span class="mini-card-tag">${item.status}</span>
-                        </div>
+                    <h3 class="font-medium text-lg mb-2">${i.content}</h3>
+                    <div class="flex gap-4 text-sm text-gray-500">
+                        <span>${i.type}</span>
+                        <span>${i.subject}</span>
+                        <span>${i.createdAt}</span>
                     </div>
-                    <div class="day-card-content">
-                        <div class="content" style="padding: 0 20px;">${item.content}</div>
-                        <div class="suggestions">
-                            <div class="suggestions-title">💡 创作建议</div>
-                            ${(item.suggestions || []).map(s => `<div class="suggestion-item"><span class="suggestion-bullet">•</span>${s}</div>`).join('')}
+                    ${i.suggestions ? `
+                        <div class="mt-4 p-4 bg-gray-50 rounded-xl">
+                            <h4 class="font-medium mb-2">💡 创作建议</h4>
+                            <p class="text-sm text-gray-600">${i.suggestions.titles ? i.suggestions.titles.join(', ') : ''}</p>
                         </div>
-                        <div class="card-footer">
-                            <span class="date">${item.createdAt}</span>
-                            <div class="actions">
-                                <select class="status-select" onclick="event.stopPropagation()" onchange="updateStatus('${item.id}', this.value)">
-                                    <option value="待创作" ${item.status === '待创作' ? 'selected' : ''}>待创作</option>
-                                    <option value="进行中" ${item.status === '进行中' ? 'selected' : ''}>进行中</option>
-                                    <option value="已发布" ${item.status === '已发布' ? 'selected' : ''}>已发布</option>
-                                    <option value="归档" ${item.status === '归档' ? 'selected' : ''}>归档</option>
-                                </select>
-                                <button class="action-btn delete" onclick="event.stopPropagation(); deleteInspiration('${item.id}')">🗑️</button>
-                            </div>
-                        </div>
-                    </div>
+                    ` : ''}
                 </div>
             `).join('');
         }
         
-        function toggleCard(card) {
-            card.classList.toggle('expanded');
-        }
-        
-        function updateStats() {
-            document.getElementById('stat-total').textContent = inspirations.length;
-            document.getElementById('stat-pending').textContent = inspirations.filter(i => i.status === '待创作').length;
-            document.getElementById('stat-done').textContent = inspirations.filter(i => i.status === '已发布').length;
-        }
-        
-        function addInspiration() {
-            const content = document.getElementById('new-content').value.trim();
-            if (!content) return;
-            
-            const platform = document.getElementById('new-platform').value;
-            const type = document.getElementById('new-type').value;
-            const subject = document.getElementById('new-subject').value;
-            const status = document.getElementById('new-status').value;
-            
-            const item = {
-                id: Date.now().toString(),
-                content,
-                platform,
-                type,
-                subject,
-                status,
-                suggestions: generateSuggestions(platform, type, subject),
-                createdAt: new Date().toLocaleString('zh-CN')
+        function getStatusColor(status) {
+            const colors = {
+                '待创作': 'yellow',
+                '创作中': 'blue',
+                '已完成': 'green'
             };
-            
-            inspirations.unshift(item);
-            localStorage.setItem('inspirations', JSON.stringify(inspirations));
-            closeModal();
-            renderList();
-            updateStats();
-            autoSync();
+            return colors[status] || 'gray';
         }
         
-        function updateStatus(id, status) {
-            const item = inspirations.find(i => i.id === id);
-            if (item) {
-                item.status = status;
-                localStorage.setItem('inspirations', JSON.stringify(inspirations));
-                updateStats();
-                autoSync();
-            }
+        function showStatus(msg, type) {
+            const status = document.getElementById('statusText');
+            status.textContent = msg;
+            const dot = status.parentElement.querySelector('span:first-child');
+            dot.className = `w-2 h-2 rounded-full ${
+                type === 'success' ? 'bg-green-500' : 
+                type === 'error' ? 'bg-red-500' : 
+                type === 'warning' ? 'bg-yellow-500' : 
+                'bg-blue-500'
+            }`;
         }
         
-        function deleteInspiration(id) {
-            if (confirm('确定删除这个灵感吗？')) {
-                inspirations = inspirations.filter(i => i.id !== id);
-                localStorage.setItem('inspirations', JSON.stringify(inspirations));
-                renderList();
-                updateStats();
-                autoSync();
-            }
-        }
-        
-        function openModal() {
-            document.getElementById('modal').classList.add('show');
-            document.getElementById('new-content').value = '';
-        }
-        
-        function closeModal() {
-            document.getElementById('modal').classList.remove('show');
-        }
-        
-        function toggleSettings() {
-            document.getElementById('settings').classList.toggle('show');
-        }
-        
-        function saveSettings() {
-            const token = document.getElementById('github-token').value.trim();
-            if (token) {
-                localStorage.setItem('github_token', token);
-                localStorage.setItem('github_owner', 'howardrock88');
-                localStorage.setItem('github_repo', 'inspiration-tracker');
-                localStorage.setItem('github_path', 'inspirations.json');
-                showSyncStatus('设置已保存！', 'success');
-            }
-        }
-        
-        function showSyncStatus(msg, type) {
-            const el = document.getElementById('sync-status');
-            el.className = 'sync-status ' + type;
-            el.textContent = msg;
-            setTimeout(() => el.className = 'sync-status', 3000);
-        }
-        
-        async function syncToGithub() {
-            const token = localStorage.getItem('github_token');
-            if (!token) {
-                showSyncStatus('请先在设置中输入 GitHub Token', 'error');
-                return;
-            }
-            
-            showSyncStatus('正在同步...', 'syncing');
-            
-            const owner = localStorage.getItem('github_owner');
-            const repo = localStorage.getItem('github_repo');
-            const path = localStorage.getItem('github_path');
-            
-            const content = JSON.stringify(inspirations, null, 2);
-            const encoded = btoa(unescape(encodeURIComponent(content)));
-            
-            try {
-                // Get current file SHA
-                const getUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-                let sha = null;
-                
-                try {
-                    const getResp = await fetch(getUrl, {
-                        headers: { 'Authorization': 'token ' + token }
-                    });
-                    if (getResp.ok) {
-                        const getData = await getResp.json();
-                        sha = getData.sha;
-                    }
-                } catch (e) {}
-                
-                // Update file
-                const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-                const body = {
-                    message: 'Update inspirations via web',
-                    content: encoded,
-                    ...(sha && { sha })
-                };
-                
-                const resp = await fetch(url, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': 'token ' + token,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(body)
-                });
-                
-                if (resp.ok) {
-                    showSyncStatus('✅ 已同步到 GitHub！', 'success');
-                } else {
-                    const err = await resp.text();
-                    showSyncStatus('❌ 同步失败: ' + err, 'error');
-                }
-            } catch (e) {
-                showSyncStatus('❌ 同步失败: ' + e.message, 'error');
-            }
-        }
-        
-        function autoSync() {
-            if (localStorage.getItem('github_token')) {
-                syncToGithub();
-            }
-        }
+        // Long press settings to open
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && e.shiftKey) openSettings();
+        });
         
         init();
     </script>
