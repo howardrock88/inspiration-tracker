@@ -1,0 +1,53 @@
+{
+  "date": "2026年2月19日",
+  "focus": [
+    {
+      "title": "印度AI峰会成全球焦点 OpenAI Anthropic Google高管齐聚",
+      "desc": "正在新德里举办的印度AI Impact Summit 2026吸引全球科技巨头参与，OpenAI、Anthropic、Google CEO悉数出席。印度总理莫迪公布完整AI路线图，涵盖应用层、基础设施等五大战略层。",
+      "source": "Reuters | https://www.reuters.com/world/china/india-tells-university-leave-ai-summit-after-presenting-chinese-robot-its-own-2026-02-18/"
+    },
+    {
+      "title": "Amazon悄然停止Blue Jay仓库机器人 仅运营数月",
+      "desc": "Amazon已停止运营仅几个月的Blue Jay仓库机器人。该机器人于2024年10月首次亮相，配备多条机械臂，可同时抓取和搬运多件商品。",
+      "source": "Business Insider | https://www.businessinsider.com/amazon-pulls-plug-blue-jay-warehouse-robot-2026-2"
+    }
+  ],
+  "funding": [],
+  "tech": [
+    {
+      "title": "Qualcomm发布机器人系统及Dragonwing处理器",
+      "desc": "Qualcomm在印度AI Impact Summit 2026上发布全新Robotics System和Dragonwing IQ-10处理器，专为人形机器人和高级AMR设计。",
+      "source": "Indian Express | https://indianexpress.com/article/technology/tech-news-technology/india-ai-impact-summit-2026-live-updates-major-announcements-key-speakers-10534350/"
+    },
+    {
+      "title": "Anthropic发布AI Agent自主性研究报告",
+      "desc": "Anthropic发布关于AI agent自主性的研究报告，分析数百万次Claude Code和API交互。研究显示73%的工具调用有人类监督。",
+      "source": "Anthropic @x.com | https://x.com/AnthropicAI/status/2024210035480678724"
+    },
+    {
+      "title": "OpenAI发布EVMbench评估智能合约漏洞检测能力",
+      "desc": "OpenAI推出EVMbench新基准，用于衡量AI代理检测、利用和修补高危智能合约漏洞的能力。",
+      "source": "OpenAI @x.com | https://x.com/OpenAI/status/2024193883748651102"
+    }
+  ],
+  "robotics": [
+    {
+      "title": "2025年人形机器人出货量1.86万台 中国企业占主导",
+      "desc": "2025年全球人形机器人出货量约1.86万台，中国企业宇树科技和智元机器人各出货约5000台，合计占全球总量半数以上。",
+      "source": "新浪财经 | https://finance.sina.com.cn/stock/relnews/cn/2026-02-18/doc-inhneskt5516379.shtml"
+    }
+  ],
+  "ai_hardware": [],
+  "news": [
+    {
+      "title": "Elon Musk发布Grok 4.20 Heavy重大升级",
+      "desc": "Elon Musk宣布Grok 4.20 Heavy版本发布，新版本作为16个专业代理团队实时协作运行。",
+      "source": "Elon Musk @x.com | https://x.com/elonmusk/status/2024194618930401590"
+    }
+  ],
+  "sources_summary": {
+    "chinese": ["新浪财经"],
+    "english": ["Reuters", "Business Insider", "Indian Express", "Anthropic @x.com", "OpenAI @x.com", "Elon Musk @x.com"],
+    "total_sources": 7
+  }
+}
