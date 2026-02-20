@@ -197,7 +197,7 @@
         // GitHub API
         async function loadInspirations() {
             try {
-                const url = `https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}`;
+                const url = `https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}?t=${Date.now()}`;
                 const response = await fetch(url);
                 if (!response.ok) throw new Error('Failed to load');
                 const data = await response.json();
@@ -225,7 +225,7 @@
             
             try {
                 // Get current file SHA
-                const url = `https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}`;
+                const url = `https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}?t=${Date.now()}`;
                 const getRes = await fetch(url);
                 const fileData = await getRes.json();
                 const sha = fileData.sha;
