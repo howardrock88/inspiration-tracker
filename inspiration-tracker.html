@@ -201,7 +201,7 @@
                 const response = await fetch(url);
                 if (!response.ok) throw new Error('Failed to load');
                 const data = await response.json();
-                const content = atob(data.content);
+                const content = decodeURIComponent(escape(atob(data.content)));
                 inspirations = JSON.parse(content);
                 render();
                 showStatus(`已加载 ${inspirations.length} 条灵感`, 'success');
