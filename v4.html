@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💡 灵感库 v3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Noto Sans SC', sans-serif; }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        .inspiration-card {
+            transition: all 0.3s;
+        }
+        .inspiration-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        .modal {
+            backdrop-filter: blur(5px);
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .syncing {
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="glass p-6 mb-6 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">
+                    💡 灵感库 v3
+                </h1>
+                <p class="text-gray-500 text-sm mt-1">自动同步 · 实时更新</p>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="syncNow()" class="px-4 py-2 bg-gray-100 rounded-xl hover:bg-gray-200 transition flex items-center gap-2">
+                    <span id="syncIcon">🔄</span> 同步
+                </button>
+                <button onclick="openModal()" class="btn-primary px-6 py-2 rounded-xl text-white font-medium">
+                    + 添加灵感
+                </button>
+            </div>
+        </div>
+        
+        <!-- Status Bar -->
+        <div id="statusBar" class="glass p-3 mb-4 text-sm text-gray-500 flex items-center gap-2">
+            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+            <span id="statusText">就绪</span>
+            <span class="ml-auto">自动刷新: <span id="countdown">30</span>s</span>
+        </div>
+        
+        <!-- Filters -->
+        <div class="glass p-4 mb-6">
+            <div class="flex flex-wrap gap-2">
+                <select id="platformFilter" onchange="render()" class="px-3 py-2 bg-gray-100 rounded-lg">
+                    <option value="">全部平台</option>
+                    <option value="微信">微信</option>
+                    <option value="小红书">小红书</option>
+                    <option value="抖音">抖音</option>
+                    <option value="B站">B站</option>
+                </select>
+                <select id="typeFilter" onchange="render()" class="px-3 py-2 bg-gray-100 rounded-lg">
+                    <option value="">全部类型</option>
+                    <option value="文字">文字</option>
+                    <option value="视频">视频</option>
+                </select>
+                <select id="statusFilter" onchange="render()" class="px-3 py-2 bg-gray-100 rounded-lg">
+                    <option value="">全部状态</option>
+                    <option value="待创作">待创作</option>
+                    <option value="创作中">创作中</option>
+                    <option value="已完成">已完成</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Inspirations List -->
+        <div id="inspirationsList" class="space-y-4"></div>
+    </div>
+    
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 bg-black/50 modal hidden items-center justify-center p-4">
+        <div class="glass p-6 w-full max-w-lg">
+            <h2 class="text-xl font-bold mb-4">添加新灵感</h2>
+            <form id="inspirationForm" onsubmit="saveInspiration(event)">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">灵感内容</label>
+                        <textarea id="content" required class="w-full p-3 bg-gray-100 rounded-xl" rows="3" placeholder="写下你的灵感..."></textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">平台</label>
+                            <select id="platform" class="w-full p-3 bg-gray-100 rounded-xl">
+                                <option value="微信">微信</option>
+                                <option value="小红书">小红书</option>
+                                <option value="抖音">抖音</option>
+                                <option value="B站">B站</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">类型</label>
+                            <select id="type" class="w-full p-3 bg-gray-100 rounded-xl">
+                                <option value="文字">文字</option>
+                                <option value="视频">视频</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">主题</label>
+                        <select id="subject" class="w-full p-3 bg-gray-100 rounded-xl">
+                            <option value="资讯">资讯</option>
+                            <option value="测评">测评</option>
+                            <option value="教程">教程</option>
+                            <option value="个人分享">个人分享</option>
+                            <option value="长文">长文</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex gap-3 mt-6">
+                    <button type="button" onclick="closeModal()" class="flex-1 px-4 py-3 bg-gray-100 rounded-xl hover:bg-gray-200">取消</button>
+                    <button type="submit" class="flex-1 btn-primary px-4 py-3 rounded-xl text-white font-medium">保存并同步</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="fixed inset-0 bg-black/50 modal hidden items-center justify-center p-4">
+        <div class="glass p-6 w-full max-w-md">
+            <h2 class="text-xl font-bold mb-4">⚙️ 设置</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">GitHub Token</label>
+                    <input type="password" id="githubToken" class="w-full p-3 bg-gray-100 rounded-xl" placeholder="ghp_xxxx">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">GitHub Owner</label>
+                    <input type="text" id="githubOwner" class="w-full p-3 bg-gray-100 rounded-xl" placeholder="your-username">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">GitHub Repo</label>
+                    <input type="text" id="githubRepo" class="w-full p-3 bg-gray-100 rounded-xl" placeholder="inspiration-tracker">
+                </div>
+                <button onclick="saveSettings()" class="w-full btn-primary px-4 py-3 rounded-xl text-white font-medium">保存设置</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Config
+        const GITHUB = {
+            owner: localStorage.getItem('github_owner') || 'howardrock88',
+            repo: localStorage.getItem('github_repo') || 'inspiration-tracker',
+            path: 'inspirations.json'
+        };
+        
+        let inspirations = [];
+        let countdown = 30;
+        let countdownInterval;
+        
+        // Init
+        async function init() {
+            loadSettings();
+            await loadInspirations();
+            startAutoRefresh();
+        }
+        
+        function loadSettings() {
+            if (!localStorage.getItem('github_token')) {
+                showStatus('请先设置 GitHub Token', 'warning');
+            }
+        }
+        
+        // GitHub API
+        async function loadInspirations() {
+            try {
+                const url = `https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}`;
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Failed to load');
+                const data = await response.json();
+                const content = decodeURIComponent(escape(atob(data.content)));
+                inspirations = JSON.parse(content);
+                render();
+                showStatus(`已加载 ${inspirations.length} 条灵感`, 'success');
+            } catch (e) {
+                console.error(e);
+                showStatus('加载失败，使用本地缓存', 'error');
+                inspirations = JSON.parse(localStorage.getItem('inspirations') || '[]');
+                render();
+            }
+        }
+        
+        async function saveToGitHub() {
+            const token = localStorage.getItem('github_token');
+            if (!token) {
+                alert('请先设置 GitHub Token');
+                openSettings();
+                return false;
+            }
+            
+            showStatus('正在同步到 GitHub...', 'syncing');
+            
+            try {
+                // Get current file SHA
+                const url = `https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}`;
+                const getRes = await fetch(url);
+                const fileData = await getRes.json();
+                const sha = fileData.sha;
+                
+                // Update file
+                const content = JSON.stringify(inspirations, null, 2);
+                const encoded = btoa(unescape(encodeURIComponent(content)));
+                
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: 'Update inspirations',
+                        content: encoded,
+                        sha: sha
+                    })
+                });
+                
+                if (!response.ok) throw new Error('Sync failed');
+                showStatus('同步成功!', 'success');
+                return true;
+            } catch (e) {
+                console.error(e);
+                showStatus('同步失败: ' + e.message, 'error');
+                return false;
+            }
+        }
+        
+        // UI Functions
+        function openModal() {
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('modal').classList.add('flex');
+            document.getElementById('content').focus();
+        }
+        
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+            document.getElementById('modal').classList.remove('flex');
+        }
+        
+        function openSettings() {
+            document.getElementById('settingsModal').classList.remove('hidden');
+            document.getElementById('settingsModal').classList.add('flex');
+            document.getElementById('githubToken').value = localStorage.getItem('github_token') || '';
+            document.getElementById('githubOwner').value = localStorage.getItem('github_owner') || GITHUB.owner;
+            document.getElementById('githubRepo').value = localStorage.getItem('github_repo') || GITHUB.repo;
+        }
+        
+        function saveSettings() {
+            localStorage.setItem('github_token', document.getElementById('githubToken').value);
+            localStorage.setItem('github_owner', document.getElementById('githubOwner').value);
+            localStorage.setItem('github_repo', document.getElementById('githubRepo').value);
+            document.getElementById('settingsModal').classList.add('hidden');
+            document.getElementById('settingsModal').classList.remove('flex');
+            showStatus('设置已保存', 'success');
+        }
+        
+        async function saveInspiration(e) {
+            e.preventDefault();
+            
+            const newInspiration = {
+                id: Date.now().toString(),
+                content: document.getElementById('content').value,
+                platform: document.getElementById('platform').value,
+                type: document.getElementById('type').value,
+                subject: document.getElementById('subject').value,
+                status: '待创作',
+                createdAt: new Date().toLocaleString('zh-CN')
+            };
+            
+            inspirations.unshift(newInspiration);
+            
+            const success = await saveToGitHub();
+            if (success) {
+                closeModal();
+                document.getElementById('inspirationForm').reset();
+                // Trigger webhook to notify OpenClaw
+                notifyOpenClaw();
+            }
+        }
+        
+        function notifyOpenClaw() {
+            // Call OpenClaw webhook to trigger suggestion generation
+            fetch('http://localhost:18789/v1/cron/jobs/490f8737-40fc-46b3-94af-0a5ffe329d16/run', {
+                method: 'POST'
+            }).catch(e => console.log('OpenClaw notification sent'));
+        }
+        
+        async function syncNow() {
+            const icon = document.getElementById('syncIcon');
+            icon.classList.add('syncing');
+            await loadInspirations();
+            icon.classList.remove('syncing');
+        }
+        
+        function startAutoRefresh() {
+            countdownInterval = setInterval(() => {
+                countdown--;
+                document.getElementById('countdown').textContent = countdown;
+                if (countdown <= 0) {
+                    countdown = 30;
+                    loadInspirations();
+                }
+            }, 1000);
+        }
+        
+        function render() {
+            const platform = document.getElementById('platformFilter').value;
+            const type = document.getElementById('typeFilter').value;
+            const status = document.getElementById('statusFilter').value;
+            
+            const filtered = inspirations.filter(i => {
+                if (platform && i.platform !== platform) return false;
+                if (type && i.type !== type) return false;
+                if (status && i.status !== status) return false;
+                return true;
+            });
+            
+            const list = document.getElementById('inspirationsList');
+            if (filtered.length === 0) {
+                list.innerHTML = '<div class="glass p-8 text-center text-gray-500">暂无灵感，点击右上角添加</div>';
+                return;
+            }
+            
+            list.innerHTML = filtered.map(i => `
+                <div class="glass p-5 inspiration-card">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm">${i.platform}</span>
+                        <span class="px-3 py-1 bg-${getStatusColor(i.status)}-100 text-${getStatusColor(i.status)}-600 rounded-full text-sm">${i.status}</span>
+                    </div>
+                    <h3 class="font-medium text-lg mb-2">${i.content}</h3>
+                    <div class="flex gap-4 text-sm text-gray-500">
+                        <span>${i.type}</span>
+                        <span>${i.subject}</span>
+                        <span>${i.createdAt}</span>
+                    </div>
+                    ${i.suggestions ? `
+                        <div class="mt-4 p-4 bg-gray-50 rounded-xl">
+                            <h4 class="font-medium mb-2">💡 创作建议</h4>
+                            <p class="text-sm text-gray-600">${i.suggestions.titles ? i.suggestions.titles.join(', ') : ''}</p>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+        
+        function getStatusColor(status) {
+            const colors = {
+                '待创作': 'yellow',
+                '创作中': 'blue',
+                '已完成': 'green'
+            };
+            return colors[status] || 'gray';
+        }
+        
+        function showStatus(msg, type) {
+            const status = document.getElementById('statusText');
+            status.textContent = msg;
+            const dot = status.parentElement.querySelector('span:first-child');
+            dot.className = `w-2 h-2 rounded-full ${
+                type === 'success' ? 'bg-green-500' : 
+                type === 'error' ? 'bg-red-500' : 
+                type === 'warning' ? 'bg-yellow-500' : 
+                'bg-blue-500'
+            }`;
+        }
+        
+        // Long press settings to open
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && e.shiftKey) openSettings();
+        });
+        
+        init();
+    </script>
+</body>
+</html>
