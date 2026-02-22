@@ -10,6 +10,9 @@
 - [ ] 2. **读取新闻源列表** - `/Users/yuxiao/.openclaw/workspace/news-sources.md`
 - [ ] 3. **确定日期** - 今日日期，用于标题
 - [ ] 4. **搜索新闻** - 使用 Brave API，多轮搜索覆盖中英文关键词
+- [ ] 4.1 **微博热搜** - 用浏览器打开 weibo.com/hot/search，筛选科技/AI/机器人相关
+- [ ] 4.2 **RSS订阅** - 36氪、虎嗅等科技媒体
+- [ ] 4.3 **X/Twitter** - 搜索AI/机器人相关话题
 - [ ] 5. **筛选过滤** - **只保留前一天新闻(2月17日早报只收录2月16日发布的新闻)**
 - [ ] 5.1 读取前一天早报查重
 - [ ] 5.2 **手动检查每条新闻的发布日期，排除任何超过24小时的新闻**
@@ -65,7 +68,13 @@
 
 ---
 
-*新闻来源: Brave Search API (90+ RSS源)*
+*新闻来源: Brave Search API + 微博热搜 + RSS + X/Twitter*
+
+## 新闻源说明
+1. **Brave Search** - 主要新闻源
+2. **微博热搜** - 筛选科技/AI/机器人相关话题
+3. **RSS订阅** - 36氪、虎嗅等
+4. **X/Twitter** - 科技账号推文
 ```
 
 ## 新闻分类
@@ -95,14 +104,21 @@
 
 #### 2. RSS 订阅源
 - 运行脚本：`python3 ~/new/rss-monitor-v2.py`
+- 如果超时，使用备用：`bash ~/openclaw/scripts/rss-simple.sh`
 - 获取过去24小时内的最新文章
 - 筛选与AI、机器人、科技相关的内容
 
 #### 3. X/Twitter 动态
-- 运行脚本或手动搜索
-- 关注账号列表：`~/new/x-monitor-accounts.md`
+- 运行 `bird` 监控重要账号
+- 如果bird失败（cookie问题），使用浏览器打开 X 搜索页面获取内容
+- 关注账号：`@NVIDIA @OpenAI @FigureRobot @Tesla @elonmusk`
 - 搜索格式：`from:OpenAI from:nvidia from:FigureRobot`
 - 重点关注：Sam Altman、Sundar Pichai、Elon Musk、黄仁勋等CEO账号
+
+#### 3. X/Twitter 动态
+- 运行 `bird` 监控重要账号
+- 如果bird失败，用浏览器访问 X 搜索页面
+- 关注账号：`@NVIDIA @OpenAI @FigureRobot @Tesla @elonmusk`
 
 ### 合并去重
 1. 从三个来源收集新闻
